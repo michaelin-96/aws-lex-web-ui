@@ -4,8 +4,10 @@ import LexWeb from './components/LexWeb.vue'
 
 <template>
   <body>
-    <div class="wrapper">
-      <LexWeb />
+    <div id="app">
+      <div class="wrapper">
+        <LexWeb />
+      </div>
     </div>
   </body>
 </template>

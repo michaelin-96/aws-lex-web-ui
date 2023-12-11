@@ -180,7 +180,6 @@ const router = createRouter({
     }
   ]
 });
-// const Router = createRouter(router);
 app.use(router)
 app.use(store)
 app.use(Plugin, {
