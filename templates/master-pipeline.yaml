@@ -590,7 +590,7 @@ Resources:
                 CodeBuildProjectName: !Ref CodeBuildName
                 CognitoUserPool: !GetAtt CognitoIdentityPool.Outputs.CognitoUserPoolId
                 CognitoUserPoolClient: !GetAtt CognitoIdentityPool.Outputs.CognitoUserPoolClientId
-                Timestamp: 1702314698
+                Timestamp: 1702315060
 
 Outputs:
     BotName:
