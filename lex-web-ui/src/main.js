@@ -7,7 +7,7 @@ import App from './App.vue'
 // Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
@@ -171,7 +171,7 @@ const store = new VuexConstructor.Store({ ...VuexStore })
 
 app.use(vuetify)
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes: [
     {
       path: '/',
