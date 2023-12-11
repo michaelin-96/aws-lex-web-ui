@@ -11,17 +11,17 @@
 //     }
 //   ]
 // })
-const { createWebHistory, createWebHashHistory } = require('vue-router');
+// const { createWebHistory, createWebHashHistory } = require('vue-router');
 
 
-module.exports = {
-  history: createWebHistory(process.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'LexWeb',
-      component: require('../components/LexWeb.vue').default,
-    }
-  ]
-}
+// module.exports = {
+//   history: createWebHistory(process.env.BASE_URL),
+//   routes: [
+//     {
+//       path: '/',
+//       name: 'LexWeb',
+//       component: require('../components/LexWeb.vue').default,
+//     }
+//   ]
+// }
 // export default router

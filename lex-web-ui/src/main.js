@@ -176,7 +176,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'LexWeb',
-      component: require('../components/LexWeb.vue').default,
+      component: require('./components/LexWeb.vue').default,
     }
   ]
 });
