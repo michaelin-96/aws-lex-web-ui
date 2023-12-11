@@ -2,7 +2,7 @@
   "name": "aws-lex-web-ui",
   "version": "0.20.2",
   "description": "Sample Amazon Lex Web Interface",
-  "main": "dist/lex-web-ui.min.js",
+  "main": "dist/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/awslabs/aws-lex-web-ui.git"

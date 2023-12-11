@@ -146,7 +146,7 @@ module.exports = (env) => {
             },
             // copy lex-web-ui library
             {
-              from: path.join(basePath, 'lex-web-ui/dist/bundle/lex-web-ui.*'),
+              from: path.join(basePath, 'lex-web-ui/dist/bundle/main.*'),
               to: distDir,
             },
             {

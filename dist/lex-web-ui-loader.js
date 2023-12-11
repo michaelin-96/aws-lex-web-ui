@@ -7296,8 +7296,8 @@ var dependenciesFullPage = {
     canUseMin: true
   }, {
     name: 'LexWebUi',
-    url: './lex-web-ui.js',
-    canUseMin: true
+    url: './main.js',
+    canUseMin: false
   }],
   css: [{
     name: 'roboto-material-icons',
@@ -7308,7 +7308,7 @@ var dependenciesFullPage = {
     canUseMin: true
   }, {
     name: 'lex-web-ui',
-    url: './lex-web-ui.css',
+    url: './main.css',
     canUseMin: true
   }, {
     name: 'lex-web-ui-loader',

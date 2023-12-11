@@ -6,6 +6,7 @@
 
 // The ChatBotUiLoader variable contains the FullPageLoader field which is a
 // constructor for the loader.
+console.log("Here");
 var Loader = ChatBotUiLoader.FullPageLoader;
 
 // The loader constructor supports various configurable options used to

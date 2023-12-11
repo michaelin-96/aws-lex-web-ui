@@ -109,14 +109,18 @@
         aria-label="go back to previous message"
         icon="mdi-arrow-left"
       ></v-btn>
+      <!-- 
       <v-tooltip
         v-model="prevNav"
         activator=".nav-button-prev"
         content-class="tooltip-custom"
         right
       >
+        <template v-slot:activator="{ props }">
+          <v-btn class=".nav-button-prev" v-bind="props">Tooltip</v-btn>
+        </template>
         <span>Previous</span>
-      </v-tooltip>
+      </v-tooltip> -->
     </div>
 
     <v-toolbar-title
