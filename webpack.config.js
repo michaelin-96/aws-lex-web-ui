@@ -36,6 +36,9 @@ module.exports = (env) => {
             stream: require.resolve('stream-browserify'),
             'process/browser': require.resolve('process/browser'),
         },
+        alias: {
+          vue: "vue/dist/vue.esm-bundler.js"
+        }
     },
     module: {
       rules: [
@@ -54,6 +57,9 @@ module.exports = (env) => {
           test: /\.js$/,
           exclude: /[\\/]node_modules[\\/]/,
           loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         },
         {
           test: /\.css$/,
