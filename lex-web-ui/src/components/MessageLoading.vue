@@ -1,6 +1,5 @@
 <template>
   <div class="flex message d-flex message-bot messsge-loading" aria-hidden="true">
-    <!-- contains message and response card -->
   </div>
 </template>
 
