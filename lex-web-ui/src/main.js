@@ -2,11 +2,12 @@ import './init'
 import { createApp } from 'vue'
 
 import App from './App.vue'
-import router from './router'
+// import router from './router'
 
 // Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
+import { createRouter, createWebHistory } from 'vue-router'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
@@ -169,6 +170,17 @@ const pollyClient =
 const store = new VuexConstructor.Store({ ...VuexStore })
 
 app.use(vuetify)
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'LexWeb',
+      component: require('../components/LexWeb.vue').default,
+    }
+  ]
+});
+// const Router = createRouter(router);
 app.use(router)
 app.use(store)
 app.use(Plugin, {
