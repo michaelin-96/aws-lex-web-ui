@@ -141,14 +141,14 @@
     >
       <span id="min-max-tooltip">{{ toolTipMinimize }}</span>
     </v-tooltip>
-    <v-tooltip
+    <!-- <v-tooltip
       v-model="shouldShowHelpTooltip"
       content-class="tooltip-custom"
       activator=".help-toggle"
       left
     >
       <span id="help-tooltip">help</span>
-    </v-tooltip>
+    </v-tooltip> -->
     <v-tooltip
       v-model="shouldShowEndLiveChatTooltip"
       content-class="tooltip-custom"
