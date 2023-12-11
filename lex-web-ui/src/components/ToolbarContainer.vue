@@ -109,7 +109,7 @@
         aria-label="go back to previous message"
         icon="mdi-arrow-left"
       ></v-btn>
-      <!-- 
+      
       <v-tooltip
         v-model="prevNav"
         activator=".nav-button-prev"
@@ -120,7 +120,7 @@
           <v-btn class=".nav-button-prev" v-bind="props">Tooltip</v-btn>
         </template>
         <span>Previous</span>
-      </v-tooltip> -->
+      </v-tooltip>
     </div>
 
     <v-toolbar-title
@@ -133,23 +133,23 @@
 
     <v-spacer />
     <!-- tooltip should be before btn to avoid right margin issue in mobile -->
-    <!-- <v-tooltip
+    <v-tooltip
       v-model="shouldShowTooltip"
       content-class="tooltip-custom"
       activator=".min-max-toggle"
       left
     >
       <span id="min-max-tooltip">{{ toolTipMinimize }}</span>
-    </v-tooltip> -->
-    <!-- <v-tooltip
+    </v-tooltip>
+    <v-tooltip
       v-model="shouldShowHelpTooltip"
       content-class="tooltip-custom"
       activator=".help-toggle"
       left
     >
       <span id="help-tooltip">help</span>
-    </v-tooltip> -->
-    <!-- <v-tooltip
+    </v-tooltip>
+    <v-tooltip
       v-model="shouldShowEndLiveChatTooltip"
       content-class="tooltip-custom"
       activator=".end-live-chat-btn"
@@ -164,7 +164,7 @@
       right
     >
       <span id="menu-tooltip">menu</span>
-    </v-tooltip> -->
+    </v-tooltip>
     <span v-if="isLocaleSelectable" class="localeInfo">{{ currentLocale }}</span>
     <v-btn
       v-if="shouldRenderHelpButton && !isLiveChat && !isUiMinimized"
