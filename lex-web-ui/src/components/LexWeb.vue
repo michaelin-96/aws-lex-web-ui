@@ -62,8 +62,8 @@ License for the specific language governing permissions and limitations under th
 /* eslint no-console: ["error", { allow: ["warn", "error", "info"] }] */
 
 import MinButton from '@/components/MinButton.vue'
-//import ToolbarContainer from '@/components/ToolbarContainer.vue'
-//import MessageList from '@/components/MessageList.vue'
+import ToolbarContainer from '@/components/ToolbarContainer.vue'
+import MessageList from '@/components/MessageList.vue'
 import InputContainer from '@/components/InputContainer.vue'
 import * as LexRuntime from 'aws-sdk/clients/lexruntime'
 import * as LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2'
@@ -80,8 +80,8 @@ export default {
   },
   components: {
     MinButton,
-    //ToolbarContainer,
-    //MessageList,
+    ToolbarContainer,
+    MessageList,
     InputContainer
   },
   computed: {
