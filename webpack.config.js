@@ -36,9 +36,9 @@ module.exports = (env) => {
             stream: require.resolve('stream-browserify'),
             'process/browser': require.resolve('process/browser'),
         },
-        alias: {
-          vue: "vue/dist/vue.esm-bundler.js"
-        }
+        // alias: {
+        //   vue: "vue/dist/vue.esm-bundler.js"
+        // }
     },
     module: {
       rules: [
