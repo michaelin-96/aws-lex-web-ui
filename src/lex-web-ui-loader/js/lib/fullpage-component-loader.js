@@ -15,6 +15,7 @@
 /* global AWS LexWebUi Vue */
 import { ConfigLoader } from './config-loader';
 import { logout, login, completeLogin, completeLogout, getAuth, refreshLogin, isTokenExpired, forceLogin } from './loginutil';
+import { createApp } from 'vue'
 
 /**
  * Instantiates and mounts the chatbot component
@@ -296,6 +297,7 @@ export class FullPageComponentLoader {
         mergedConfig.region || mergedConfig.cognito.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1';
     this.config = mergedConfig;
     if (this.isRunningEmbeded()) {
+      console.log('Running in embedded mode')
       return FullPageComponentLoader.createComponent(mergedConfig)
         .then(lexWebUi => (
           FullPageComponentLoader.mountComponent(this.elementId, lexWebUi)
@@ -309,6 +311,7 @@ export class FullPageComponentLoader {
       .then(() => {
         FullPageComponentLoader.createComponent(mergedConfig)
           .then((lexWebUi) => {
+            console.log(`ElementId is ${this.elementId}`);
             FullPageComponentLoader.mountComponent(this.elementId, lexWebUi);
           });
       });
@@ -365,15 +368,22 @@ export class FullPageComponentLoader {
       }
 
       try {
-        const LexWebUiComponent = Vue.extend({
-          store: lexWebUi.store,
-          template: '<div id="lex-web-ui"><lex-web-ui/></div>',
-        });
+        // const LexWebUiComponent = Vue.extend({
+        //   store: lexWebUi.store,
+        //   template: '<div id="lex-web-ui"><lex-web-ui/></div>',
+        // });
+
+        // const app = createApp({
+        //   template: '<div id="lex-web-ui"><lex-web-ui/></div>',
+        // })
+
+        const app = lexWebUi.app;
 
         // mounts off-document
-        const lexWebUiComponent = new LexWebUiComponent().$mount();
+        const lexWebUiComponent =  app.mount(`#${elId}`);
+        console.log(`lexWebUiComponent ${lexWebUiComponent}`);
         // replace existing element
-        el.parentNode.replaceChild(lexWebUiComponent.$el, el);
+        //el.parentNode.replaceChild(lexWebUiComponent.$el, el);
         resolve(lexWebUiComponent);
       } catch (err) {
         reject(new Error(`failed to mount lexWebUi component: ${err}`));

@@ -18,13 +18,12 @@ License for the specific language governing permissions and limitations under th
  * Exports Loader as the plugin constructor
  * and Store as store that can be used with Vuex.Store()
  */
-import Vue from 'vue';
-import Vuex from 'vuex';
 import { Config as AWSConfig, CognitoIdentityCredentials }
   from 'aws-sdk/global';
 import LexRuntime from 'aws-sdk/clients/lexruntime';
 import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
 import Polly from 'aws-sdk/clients/polly';
+import { defineAsyncComponent } from 'vue'
 
 import LexWeb from './components/LexWeb';
 import VuexStore from './store';
@@ -50,25 +49,33 @@ const errorComponent = {
 /**
  * Vue Asynchonous Component
  */
-const AsyncComponent = ({
-  component = Promise.resolve(Component),
-  loading = loadingComponent,
-  error = errorComponent,
-  delay = 200,
-  timeout = 10000,
-}) => ({
-  // must be a promise
-  component,
-  // A component to use while the async component is loading
-  loading,
-  // A component to use if the load fails
-  error,
-  // Delay before showing the loading component. Default: 200ms.
-  delay,
-  // The error component will be displayed if a timeout is
-  // provided and exceeded. Default: 10000ms.
-  timeout,
-});
+// const AsyncComponent = defineAsyncComponent(({
+//   loader = Promise.resolve(Component),
+//   loading = loadingComponent,
+//   error = errorComponent,
+//   delay = 200,
+//   timeout = 10000,
+// }) => ({
+//   // must be a promise
+//   loader,
+//   // A component to use while the async component is loading
+//   loading,
+//   // A component to use if the load fails
+//   error,
+//   // Delay before showing the loading component. Default: 200ms.
+//   delay,
+//   // The error component will be displayed if a timeout is
+//   // provided and exceeded. Default: 10000ms.
+//   timeout,
+// }));
+
+const AsyncComponent = defineAsyncComponent({
+  loader: Promise.resolve(Component),
+  delay: 200,
+  timeout: 10000,
+  errorComponent: errorComponent,
+  loadingComponent: loadingComponent
+})
 
 /**
  * Vue Plugin
@@ -88,6 +95,7 @@ export const Plugin = {
     //  console.warn('plugin should only be used once');
    // }
     // values to be added to custom vue property
+    console.log('Plugin called');
     const value = {
       config,
       awsConfig,
@@ -98,8 +106,10 @@ export const Plugin = {
     // add custom property to Vue
     // for example, access this in a component via this.$lexWebUi
     app.config.globalProperties.name = value;
+    console.log("global value set");
     // register as a global component
     app.component(componentName, component);
+    console.log("component registered");
   },
 };
 

@@ -1,5 +1,6 @@
 import './init'
-import { createApp } from 'vue'
+//import { createApp } from 'vue'
+import { createApp } from 'vue/dist/vue.esm-bundler';
 
 
 import App from './App.vue'
@@ -31,41 +32,60 @@ import { config as defaultConfig, mergeConfig } from './config'
 
 // Vuetify
 
-const vuetify = createVuetify({
-  components,
-  directives,
-  icons: {
-    defaultSet: 'mdi',
-    aliases,
-    sets: {
-      mdi,
-    },
-  },
-})
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+//   icons: {
+//     defaultSet: 'mdi',
+//     aliases,
+//     sets: {
+//       mdi,
+//     },
+//   },
+// })
 
-//global.Buffer = Buffer
+// //global.Buffer = Buffer
 
-const app = createApp(App)
+// const app = createApp(App)
 
-app.use(vuetify)
-// const router = createRouter({
-//   history: createWebHashHistory(process.env.BASE_URL),
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'LexWeb',
-//       component: require('./components/LexWeb.vue').default,
-//     }
-//   ]
-// });
-app.use(router)
-app.use(createStore(VuexStore))
-console.log("Mounting App")
-app.mount('#lex-app')
+// app.use(vuetify)
+// console.log(`${process.env.BASE_URL}`);
+// app.use(router)
+// app.use(createStore(VuexStore))
+// console.log("Mounting App")
+// app.mount('#lex-app')
 
 export class Loader {
   constructor(config = {}) {
     console.log(`Config Received ${JSON.stringify(config)}`);
+
+    const vuetify = createVuetify({
+      components,
+      directives,
+      icons: {
+        defaultSet: 'mdi',
+        aliases,
+        sets: {
+          mdi,
+        },
+      },
+    })
+    
+    //global.Buffer = Buffer
+    
+    //const app = createApp(App)
+    const app = createApp({
+      template: '<div id="lex-web-ui"><lex-web-ui/></div>',
+    })
+    
+    app.use(vuetify)
+    console.log(`${process.env.BASE_URL}`);
+    app.use(createStore(VuexStore))
+    console.log("Mounting App")
+    //const mountedApp = app.mount("#app")
+    //console.log(`Mounted app ${mountedApp}`);
+    this.app = app;
+
     const mergedConfig = mergeConfig(defaultConfig, config);
 
     // const VueConstructor = (window.Vue) ? window.Vue : Vue;
@@ -123,7 +143,8 @@ export class Loader {
     ) ? new PollyConstructor(awsConfig) : null;
 
     //this.store = new VuexConstructor.Store({ ...VuexStore });
-
+    
+    this.app = app;
     app.use(Plugin, {
       config: mergedConfig,
       awsConfig,
@@ -131,5 +152,6 @@ export class Loader {
       lexRuntimeV2Client,
       pollyClient,
     });
+    console.log("Plugin Mounted");
   }
 }
