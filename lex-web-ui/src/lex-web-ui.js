@@ -35,7 +35,8 @@ import { config as defaultConfig, mergeConfig } from '@/config';
  */
 const Component = {
   name: 'lex-web-ui',
-  template: '<lex-web v-on="$listeners"></lex-web>',
+  //template: '<lex-web v-on="$listeners"></lex-web>',
+  template: '<lex-web></lex-web>',
   components: { LexWeb },
 };
 
@@ -70,7 +71,7 @@ const errorComponent = {
 // }));
 
 const AsyncComponent = defineAsyncComponent({
-  loader: Promise.resolve(Component),
+  loader: () => Promise.resolve(Component),
   delay: 200,
   timeout: 10000,
   errorComponent: errorComponent,

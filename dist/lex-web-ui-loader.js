@@ -25436,11 +25436,12 @@ var FullPageComponentLoader = /*#__PURE__*/function () {
 
           // mounts off-document
           var lexWebUiComponent = app.mount("#".concat(elId));
-          console.log("lexWebUiComponent ".concat(lexWebUiComponent));
+          //console.log(`lexWebUiComponent ${lexWebUiComponent}`);
           // replace existing element
           //el.parentNode.replaceChild(lexWebUiComponent.$el, el);
           resolve(lexWebUiComponent);
         } catch (err) {
+          console.log(err);
           reject(new Error("failed to mount lexWebUi component: ".concat(err)));
         }
       });

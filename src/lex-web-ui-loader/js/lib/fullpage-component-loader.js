@@ -381,11 +381,12 @@ export class FullPageComponentLoader {
 
         // mounts off-document
         const lexWebUiComponent =  app.mount(`#${elId}`);
-        console.log(`lexWebUiComponent ${lexWebUiComponent}`);
+        //console.log(`lexWebUiComponent ${lexWebUiComponent}`);
         // replace existing element
         //el.parentNode.replaceChild(lexWebUiComponent.$el, el);
         resolve(lexWebUiComponent);
       } catch (err) {
+        console.log(err);
         reject(new Error(`failed to mount lexWebUi component: ${err}`));
       }
     });
