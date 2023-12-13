@@ -290,6 +290,7 @@ export class FullPageComponentLoader {
    * configParam overrides at runtime the chatbot UI config
    */
   load(configParam) {
+    console.log(`load Config is ${JSON.stringify(configParam)}`)
     const mergedConfig = ConfigLoader.mergeConfig(this.config, configParam);
     mergedConfig.region =
         mergedConfig.region || mergedConfig.cognito.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1';

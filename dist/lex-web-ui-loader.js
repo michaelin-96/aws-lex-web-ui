@@ -8391,6 +8391,7 @@ var FullPageComponentLoader = /*#__PURE__*/function () {
     key: "load",
     value: function load(configParam) {
       var _this6 = this;
+      console.log("load Config is ".concat(JSON.stringify(configParam)));
       var mergedConfig = _config_loader__WEBPACK_IMPORTED_MODULE_0__.ConfigLoader.mergeConfig(this.config, configParam);
       mergedConfig.region = mergedConfig.region || mergedConfig.cognito.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1';
       this.config = mergedConfig;

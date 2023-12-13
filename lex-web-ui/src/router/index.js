@@ -1,21 +1,19 @@
-// import { createRouter, createWebHistory } from 'vue-router'
-// import LexWeb from '../components/LexWeb.vue'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import LexWeb from '../components/LexWeb.vue'
 
-// const router = createRouter({
-//   history: createWebHistory(process.env.BASE_URL),
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'LexWeb',
-//       component: LexWeb
-//     }
-//   ]
-// })
-// const { createWebHistory, createWebHashHistory } = require('vue-router');
-
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'LexWeb',
+      component: LexWeb
+    }
+  ]
+})
 
 // module.exports = {
-//   history: createWebHistory(process.env.BASE_URL),
+//   history: createWebHashHistory(process.env.BASE_URL),
 //   routes: [
 //     {
 //       path: '/',
@@ -24,4 +22,4 @@
 //     }
 //   ]
 // }
-// export default router
+export default router
