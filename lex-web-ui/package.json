@@ -9,7 +9,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
-    "start": "vue-cli-service serve --skip-plugins @vue/cli-plugin-eslint",
+    "start": "vue-cli-service serve --skip-plugins @vue/cli-plugin-eslint --mode development src/main.js",
     "build": "vue-cli-service build --skip-plugins @vue/cli-plugin-eslint",
     "build:dev": "vue-cli-service build --mode development",
     "build-dist": "npm run build:lib-dev && npm run build:lib-prod",
@@ -38,6 +38,7 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.23.3",
     "@mdi/font": "^7.2.96",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
@@ -56,6 +57,6 @@
     "npm": ">= 9.8.1"
   },
   "overrides": {
-    "postcss":"8.4.32"
+    "postcss": "8.4.32"
   }
 }
