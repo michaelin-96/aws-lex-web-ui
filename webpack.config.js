@@ -38,7 +38,7 @@ module.exports = (env) => {
             'process/browser': require.resolve('process/browser'),
         },
         alias: {
-          vue: "vue/dist/vue.esm-bundler.js"
+          vue: path.resolve('./node_modules/vue')
         }
     },
     module: {
