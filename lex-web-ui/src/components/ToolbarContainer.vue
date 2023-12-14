@@ -23,7 +23,7 @@
           v-show="!isUiMinimized"
           v-on="tooltipMenuEventHandlers"
           class="menu"
-          icon="mdi-menu"
+          icon="menu"
           small
           fab
           aria-label="menu options"
@@ -107,7 +107,7 @@
         @click="onPrev"
         v-show="hasPrevUtterance && !isUiMinimized && shouldRenderBackButton"
         aria-label="go back to previous message"
-        icon="mdi-arrow-left"
+        icon="arrow-left"
       ></v-btn>
       
       <v-tooltip
@@ -174,7 +174,7 @@
       icon
       class="help-toggle"
     >
-      <v-icon>mdi-help-circle-outline</v-icon>
+      <v-icon>help-circle-outline</v-icon>
     </v-btn>
     <v-btn
       v-if="isLiveChat && !isUiMinimized"

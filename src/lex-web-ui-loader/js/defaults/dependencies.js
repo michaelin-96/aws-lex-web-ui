@@ -56,11 +56,6 @@ export const dependenciesFullPage = {
       url: './material_icons.css',
     },
     {
-      name: 'vuetify',
-      url: './3.4.6_dist_vuetify.css',
-      canUseMin: true,
-    },
-    {
       name: 'lex-web-ui',
       url: './lex-web-ui.css',
       canUseMin: true,

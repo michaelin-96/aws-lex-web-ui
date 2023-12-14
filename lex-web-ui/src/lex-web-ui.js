@@ -31,7 +31,7 @@ import { config as defaultConfig, mergeConfig } from '@/config';
 import { createApp } from 'vue/dist/vue.esm-bundler';
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi';
+import { aliases, md } from 'vuetify/iconsets/md';
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { createStore } from 'vuex';
@@ -108,10 +108,10 @@ export class Loader {
       components,
       directives,
       icons: {
-        defaultSet: 'mdi',
+        defaultSet: 'md',
         aliases,
         sets: {
-          mdi,
+          md,
         },
       },
     })

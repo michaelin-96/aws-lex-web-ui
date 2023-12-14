@@ -116,7 +116,7 @@
                     tabindex="0"
                     size="small"
                   >
-                    mdi-thumb-up
+                    thumb-up
                   </v-icon>
                   <v-icon
                     @click="onButtonClick(negativeIntent)"
@@ -127,7 +127,7 @@
                     tabindex="0"
                     size="small"
                   >
-                    mdi-thumb-down
+                    thumb-down
                   </v-icon>
                 </div>
                 <v-icon
@@ -149,14 +149,14 @@
                     v-show="!showMessageMenu"
                     class="icon-color ml-0 mr-0"
                   >
-                    <v-icon class="play-icon">mdi-play-circle-outline</v-icon>
+                    <v-icon class="play-icon">play-circle-outline</v-icon>
                   </v-btn>
                 </div>
                 <v-menu v-if="message.type === 'human'" v-show="showMessageMenu">
                   <template v-slot:activator="{ props }">
                     <v-btn
                       v-bind="props"
-                      icon="mdi-dots-vertical"
+                      icon="dots-vertical"
                       variant="text"
                       size="x-small"
                       class="smicon"
@@ -165,7 +165,7 @@
                   <v-list>
                     <v-list-item>
                       <v-list-item-title @click="resendMessage(message.text)">
-                        <v-icon>mdi-replay</v-icon>
+                        <v-icon>replay</v-icon>
                       </v-list-item-title>
                     </v-list-item>
                     <v-list-item
@@ -173,7 +173,7 @@
                       class="message-audio"
                     >
                       <v-list-item-title @click="playAudio">
-                        <v-icon>mdi-play-circle-outline</v-icon>
+                        <v-icon>play-circle-outline</v-icon>
                       </v-list-item-title>
                     </v-list-item>
                   </v-list>

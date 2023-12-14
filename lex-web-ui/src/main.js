@@ -5,7 +5,8 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-const { aliases, mdi } = require('vuetify/iconsets/mdi');
+const { aliases, md } = require('vuetify/iconsets/md');
+// import '@mdi/font/css/materialdesignicons.css'
 import VuexStore from './store'
 import { createStore } from 'vuex';
 import router from './router'
@@ -14,10 +15,10 @@ const vuetify = createVuetify({
   components,
   directives,
   icons: {
-    defaultSet: 'mdi',
+    defaultSet: 'md',
     aliases,
     sets: {
-      mdi,
+      md,
     },
   },
 })
