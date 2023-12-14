@@ -27,8 +27,14 @@ import { defineAsyncComponent } from 'vue'
 
 import LexWeb from './components/LexWeb';
 import VuexStore from './store';
-
 import { config as defaultConfig, mergeConfig } from '@/config';
+import { createApp } from 'vue/dist/vue.esm-bundler';
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import { aliases, mdi } from 'vuetify/iconsets/mdi';
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { createStore } from 'vuex';
 
 /**
  * Vue Component
@@ -50,26 +56,6 @@ const errorComponent = {
 /**
  * Vue Asynchonous Component
  */
-// const AsyncComponent = defineAsyncComponent(({
-//   loader = Promise.resolve(Component),
-//   loading = loadingComponent,
-//   error = errorComponent,
-//   delay = 200,
-//   timeout = 10000,
-// }) => ({
-//   // must be a promise
-//   loader,
-//   // A component to use while the async component is loading
-//   loading,
-//   // A component to use if the load fails
-//   error,
-//   // Delay before showing the loading component. Default: 200ms.
-//   delay,
-//   // The error component will be displayed if a timeout is
-//   // provided and exceeded. Default: 10000ms.
-//   timeout,
-// }));
-
 const AsyncComponent = defineAsyncComponent({
   loader: () => Promise.resolve(Component),
   delay: 200,
@@ -94,9 +80,8 @@ export const Plugin = {
   }) {
     //if (name in VueConstructor) { TODO- Manish check for this in vue3
     //  console.warn('plugin should only be used once');
-   // }
+    // }
     // values to be added to custom vue property
-    console.log('Plugin called');
     const value = {
       config,
       awsConfig,
@@ -106,11 +91,9 @@ export const Plugin = {
     };
     // add custom property to Vue
     // for example, access this in a component via this.$lexWebUi
-    app.config.globalProperties.name = value;
-    console.log("global value set");
+    app.config.globalProperties[name] = value;
     // register as a global component
     app.component(componentName, component);
-    console.log("component registered");
   },
 };
 
@@ -119,4 +102,83 @@ export const Store = VuexStore;
 /**
  * Main Class
  */
+export class Loader {
+  constructor(config = {}) {
+    const vuetify = createVuetify({
+      components,
+      directives,
+      icons: {
+        defaultSet: 'mdi',
+        aliases,
+        sets: {
+          mdi,
+        },
+      },
+    })
+    const app = createApp({
+      template: '<div id="lex-web-ui"><lex-web-ui/></div>',
+    })
+
+    app.use(vuetify)
+    const store = createStore(VuexStore)
+    this.store = store
+    app.use(store)
+    this.app = app;
+
+    const mergedConfig = mergeConfig(defaultConfig, config);
+
+    const AWSConfigConstructor = (window.AWS && window.AWS.Config) ?
+      window.AWS.Config :
+      AWSConfig;
+
+    const CognitoConstructor =
+      (window.AWS && window.AWS.CognitoIdentityCredentials) ?
+        window.AWS.CognitoIdentityCredentials :
+        CognitoIdentityCredentials;
+
+    const PollyConstructor = (window.AWS && window.AWS.Polly) ?
+      window.AWS.Polly :
+      Polly;
+
+    const LexRuntimeConstructor = (window.AWS && window.AWS.LexRuntime) ?
+      window.AWS.LexRuntime :
+      LexRuntime;
+
+    const LexRuntimeConstructorV2 = (window.AWS && window.AWS.LexRuntimeV2) ?
+      window.AWS.LexRuntimeV2 :
+      LexRuntimeV2;
+
+    if (!AWSConfigConstructor || !CognitoConstructor || !PollyConstructor
+      || !LexRuntimeConstructor || !LexRuntimeConstructorV2) {
+      throw new Error('unable to find AWS SDK');
+    }
+
+    const credentials = new CognitoConstructor(
+      { IdentityPoolId: mergedConfig.cognito.poolId },
+      { region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1' },
+    );
+
+    const awsConfig = new AWSConfigConstructor({
+      region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1',
+      credentials,
+    });
+
+    const lexRuntimeClient = new LexRuntimeConstructor(awsConfig);
+    const lexRuntimeV2Client = new LexRuntimeConstructorV2(awsConfig);
+    /* eslint-disable no-console */
+    const pollyClient = (
+      typeof mergedConfig.recorder === 'undefined' ||
+      (mergedConfig.recorder && mergedConfig.recorder.enable !== false)
+    ) ? new PollyConstructor(awsConfig) : null;
+
+    app.use(Plugin, {
+      config: mergedConfig,
+      awsConfig,
+      lexRuntimeClient,
+      lexRuntimeV2Client,
+      pollyClient,
+    });
+    this.app = app;
+  }
+}
 

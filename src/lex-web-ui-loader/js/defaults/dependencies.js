@@ -46,8 +46,8 @@ export const dependenciesFullPage = {
     // },
     {
       name: 'LexWebUi',
-      url: './main.js',
-      canUseMin: false,
+      url: './lex-web-ui.js',
+      canUseMin: true,
     },
   ],
   css: [
@@ -62,7 +62,7 @@ export const dependenciesFullPage = {
     },
     {
       name: 'lex-web-ui',
-      url: './main.css',
+      url: './lex-web-ui.css',
       canUseMin: true,
     },
     {

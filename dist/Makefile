@@ -5,7 +5,7 @@ all: copy-bundle build-loader
 WEB_UI_DIR := ../lex-web-ui
 WEB_UI_SRC_FILES := $(shell git ls-files $(WEB_UI_DIR)/src)
 WEB_UI_BUNDLE_DIR := $(WEB_UI_DIR)/dist/bundle
-LIBRARY_SRC_FILES := $(wildcard $(WEB_UI_BUNDLE_DIR)/main.*)
+LIBRARY_SRC_FILES := $(wildcard $(WEB_UI_BUNDLE_DIR)/lex-web-ui.*)
 LIBRARY_SRC_FILES += $(wildcard $(WEB_UI_BUNDLE_DIR)/*-worker.*)
 LIBRARY_FILES := $(patsubst $(WEB_UI_BUNDLE_DIR)/%,%,$(LIBRARY_SRC_FILES))
 

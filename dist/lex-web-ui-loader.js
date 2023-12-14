@@ -24251,8 +24251,8 @@ var dependenciesFullPage = {
   // },
   {
     name: 'LexWebUi',
-    url: './main.js',
-    canUseMin: false
+    url: './lex-web-ui.js',
+    canUseMin: true
   }],
   css: [{
     name: 'roboto-material-icons',
@@ -24263,7 +24263,7 @@ var dependenciesFullPage = {
     canUseMin: true
   }, {
     name: 'lex-web-ui',
-    url: './main.css',
+    url: './lex-web-ui.css',
     canUseMin: true
   }, {
     name: 'lex-web-ui-loader',
@@ -25344,19 +25344,16 @@ var FullPageComponentLoader = /*#__PURE__*/function () {
     key: "load",
     value: function load(configParam) {
       var _this6 = this;
-      console.log("load Config is ".concat(JSON.stringify(configParam)));
       var mergedConfig = _config_loader__WEBPACK_IMPORTED_MODULE_0__.ConfigLoader.mergeConfig(this.config, configParam);
       mergedConfig.region = mergedConfig.region || mergedConfig.cognito.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1';
       this.config = mergedConfig;
       if (this.isRunningEmbeded()) {
-        console.log('Running in embedded mode');
         return FullPageComponentLoader.createComponent(mergedConfig).then(function (lexWebUi) {
           return FullPageComponentLoader.mountComponent(_this6.elementId, lexWebUi);
         });
       }
       return Promise.all([this.initPageToComponentApi(), this.initCognitoCredentials(), this.setupBotMessageListener()]).then(function () {
         FullPageComponentLoader.createComponent(mergedConfig).then(function (lexWebUi) {
-          console.log("ElementId is ".concat(_this6.elementId));
           FullPageComponentLoader.mountComponent(_this6.elementId, lexWebUi);
         });
       });
@@ -25423,20 +25420,8 @@ var FullPageComponentLoader = /*#__PURE__*/function () {
           document.body.appendChild(el);
         }
         try {
-          // const LexWebUiComponent = Vue.extend({
-          //   store: lexWebUi.store,
-          //   template: '<div id="lex-web-ui"><lex-web-ui/></div>',
-          // });
-
-          // const app = createApp({
-          //   template: '<div id="lex-web-ui"><lex-web-ui/></div>',
-          // })
-
           var app = lexWebUi.app;
-
-          // mounts off-document
           var lexWebUiComponent = app.mount("#".concat(elId));
-          //console.log(`lexWebUiComponent ${lexWebUiComponent}`);
           // replace existing element
           //el.parentNode.replaceChild(lexWebUiComponent.$el, el);
           resolve(lexWebUiComponent);

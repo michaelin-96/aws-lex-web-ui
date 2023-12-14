@@ -148,7 +148,6 @@ export default {
     if (!this.isMobile) {
       document.documentElement.style.overflowY = 'hidden'
     }
-
     this.initConfig()
       .then(() =>
         Promise.all([
