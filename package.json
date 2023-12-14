@@ -40,7 +40,6 @@
     "regenerator-runtime": "^0.13.5",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5",
-    "vue": "^3.3.10",
     "vue-router": "^4.2.5",
     "vuetify": "^3.4.6",
     "vuetify-datetime-picker": "^2.1.1",

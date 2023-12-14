@@ -23,28 +23,51 @@ import { Config as AWSConfig, CognitoIdentityCredentials }
 import LexRuntime from 'aws-sdk/clients/lexruntime';
 import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
 import Polly from 'aws-sdk/clients/polly';
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent,  defineComponent, resolveComponent, h } from 'vue'
 
 import LexWeb from './components/LexWeb';
 import VuexStore from './store';
 import { config as defaultConfig, mergeConfig } from '@/config';
-import { createApp } from 'vue/dist/vue.esm-bundler';
+//import { createApp } from 'vue/dist/vue.esm-bundler';
+import * as Vue from 'vue';
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { createStore } from 'vuex';
+import * as Vuex from 'vuex';
+//import { createVuetify } from 'vuetify'
 
+const VueConstructor = (window.Vue) ? window.Vue : Vue;
+
+const VuexConstructor = (window.Vuex) ? window.Vuex : Vuex;
+    if (!VuexConstructor) {
+      throw new Error('unable to find Vuex');
+    }
 /**
  * Vue Component
  */
-const Component = {
+export const Component = {
   name: 'lex-web-ui',
   //template: '<lex-web v-on="$listeners"></lex-web>',
   template: '<lex-web></lex-web>',
   components: { LexWeb },
 };
+
+export const LexWebApp = LexWeb;
+
+// const Component1 = defineComponent({
+//   name: 'lex-web-ui',
+//   //template: '<lex-web v-on="$listeners"></lex-web>',
+//   template: '<lex-web></lex-web>',
+//   components: { LexWeb },
+//   setup() {
+//     return () => {
+//       return h(LexWeb)
+//     }
+//   },
+// });
 
 const loadingComponent = {
   template: '<p>Loading. Please wait...</p>',
@@ -53,11 +76,26 @@ const errorComponent = {
   template: '<p>An error ocurred...</p>',
 };
 
+export const testComponent = {
+  template: '<div>I am async!</div>',
+};
+
 /**
  * Vue Asynchonous Component
  */
-const AsyncComponent = defineAsyncComponent({
+export const AsyncComponent = VueConstructor.defineAsyncComponent({
   loader: () => Promise.resolve(Component),
+  delay: 200,
+  timeout: 10000,
+  errorComponent: errorComponent,
+  loadingComponent: loadingComponent
+})
+
+export const AsyncComponent1 = VueConstructor.defineAsyncComponent({
+  loader: () => Promise.resolve({
+    //name: 'lex-web-ui',
+    template: '<div>I am async!</div>',
+  }),
   delay: 200,
   timeout: 10000,
   errorComponent: errorComponent,
@@ -115,12 +153,12 @@ export class Loader {
         },
       },
     })
-    const app = createApp({
+    const app = VueConstructor.createApp({
       template: '<div id="lex-web-ui"><lex-web-ui/></div>',
     })
 
     app.use(vuetify)
-    const store = createStore(VuexStore)
+    const store = VuexConstructor.createStore(VuexStore)
     this.store = store
     app.use(store)
     this.app = app;
