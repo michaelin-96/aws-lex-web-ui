@@ -131,9 +131,11 @@ function chainWebpackLib(
     'vue',
     'vuex',
     //'vue-router',
-    //'vuetify',
+    'vuetify',
     /^aws-sdk\/.+$/,
   ]);
+
+  config.externalsType= 'window';
 
   config.optimization.splitChunks({
     cacheGroups: {

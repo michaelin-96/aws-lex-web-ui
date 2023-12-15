@@ -23,15 +23,15 @@ import { Config as AWSConfig, CognitoIdentityCredentials }
 import LexRuntime from 'aws-sdk/clients/lexruntime';
 import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
 import Polly from 'aws-sdk/clients/polly';
-import { defineAsyncComponent,  defineComponent, resolveComponent, h } from 'vue'
+import { defineAsyncComponent, defineComponent, resolveComponent, h } from 'vue'
 
 import LexWeb from './components/LexWeb';
 import VuexStore from './store';
 import { config as defaultConfig, mergeConfig } from '@/config';
 //import { createApp } from 'vue/dist/vue.esm-bundler';
 import * as Vue from 'vue';
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
+//import 'vuetify/styles'
+import * as Vuetify from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -43,21 +43,15 @@ const VueConstructor = (window.Vue) ? window.Vue : Vue;
 console.log("window.Vue is");
 console.log(window.Vue);
 
-const VuexConstructor = (window.Vuex) ? window.Vuex : Vuex;
-    if (!VuexConstructor) {
-      throw new Error('unable to find Vuex');
-    }
 /**
  * Vue Component
  */
-export const Component = {
+const Component = {
   name: 'lex-web-ui',
   //template: '<lex-web v-on="$listeners"></lex-web>',
   template: '<lex-web></lex-web>',
   components: { LexWeb },
 };
-
-export const LexWebApp = LexWeb;
 
 const loadingComponent = {
   template: '<p>Loading. Please wait...</p>',
@@ -122,17 +116,24 @@ export const Store = VuexStore;
 export class Loader {
   constructor(config = {}) {
     console.log("loading");
+
+    const VuexConstructor = (window.Vuex) ? window.Vuex : Vuex;
+    if (!VuexConstructor) {
+      throw new Error('unable to find Vuex');
+    }
     console.log(window.Vue);
-    const vuetify = createVuetify({
+    const VuetifyInstance = (window.Vuetify) ? window.Vuetify : Vuetify;
+    const { components, directives } = VuetifyInstance;
+    const vuetify = VuetifyInstance.createVuetify({
       components,
       directives,
-      icons: {
-        defaultSet: 'mdi',
-        aliases,
-        sets: {
-          mdi,
-        },
-      },
+      // icons: {
+      //   defaultSet: 'mdi',
+      //   aliases,
+      //   sets: {
+      //     mdi,
+      //   },
+      // },
     })
     const app = VueConstructor.createApp({
       template: '<div id="lex-web-ui"><lex-web-ui/></div>',

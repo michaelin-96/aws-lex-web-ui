@@ -33,6 +33,7 @@
     "stream-browserify": "^3.0.0",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5",
+    "vue-loader": "^17.3.1",
     "vuetify": "^3.4.6",
     "vuetify-datetime-picker": "^2.1.1",
     "vuex": "^4.1.0"

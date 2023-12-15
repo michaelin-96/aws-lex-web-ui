@@ -24241,13 +24241,11 @@ var dependenciesFullPage = {
     name: 'Vuex',
     url: './4.1.0_dist_vuex.js',
     canUseMin: true
-  },
-  // {
-  //   name: 'Vuetify',
-  //   url: './3.4.6_dist_vuetify.js',
-  //   canUseMin: true,
-  // },
-  {
+  }, {
+    name: 'Vuetify',
+    url: './3.4.6_dist_vuetify.js',
+    canUseMin: true
+  }, {
     name: 'LexWebUi',
     url: './lex-web-ui.js',
     canUseMin: false
@@ -24865,7 +24863,7 @@ var DependencyLoader = /*#__PURE__*/function () {
 
       // dependency url - can be automatically changed to a min link
       var minUrl = useMin && dependency.canUseMin ? DependencyLoader.getMinUrl(dependency.url) : dependency.url;
-
+      console.log("Loading ".concat(minUrl));
       // add base URL to relative URLs
       var url = minUrl.match('^http') ? minUrl : "".concat(baseUrl).concat(minUrl);
 
