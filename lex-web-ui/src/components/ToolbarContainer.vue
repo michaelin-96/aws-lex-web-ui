@@ -87,7 +87,6 @@
         </v-list-item>
         <v-list-item
           v-if="isLocaleSelectable"
-          v-bind:key="locale"
           :disabled="restrictLocaleChanges"
         >
           <v-list-item v-for="(locale, index) in locales" :key="index">
