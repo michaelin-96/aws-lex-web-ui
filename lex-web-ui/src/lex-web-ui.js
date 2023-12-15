@@ -40,6 +40,8 @@ import * as Vuex from 'vuex';
 //import { createVuetify } from 'vuetify'
 
 const VueConstructor = (window.Vue) ? window.Vue : Vue;
+console.log("window.Vue is");
+console.log(window.Vue);
 
 const VuexConstructor = (window.Vuex) ? window.Vuex : Vuex;
     if (!VuexConstructor) {
@@ -57,18 +59,6 @@ export const Component = {
 
 export const LexWebApp = LexWeb;
 
-// const Component1 = defineComponent({
-//   name: 'lex-web-ui',
-//   //template: '<lex-web v-on="$listeners"></lex-web>',
-//   template: '<lex-web></lex-web>',
-//   components: { LexWeb },
-//   setup() {
-//     return () => {
-//       return h(LexWeb)
-//     }
-//   },
-// });
-
 const loadingComponent = {
   template: '<p>Loading. Please wait...</p>',
 };
@@ -85,17 +75,6 @@ export const testComponent = {
  */
 export const AsyncComponent = VueConstructor.defineAsyncComponent({
   loader: () => Promise.resolve(Component),
-  delay: 200,
-  timeout: 10000,
-  errorComponent: errorComponent,
-  loadingComponent: loadingComponent
-})
-
-export const AsyncComponent1 = VueConstructor.defineAsyncComponent({
-  loader: () => Promise.resolve({
-    //name: 'lex-web-ui',
-    template: '<div>I am async!</div>',
-  }),
   delay: 200,
   timeout: 10000,
   errorComponent: errorComponent,
@@ -142,6 +121,8 @@ export const Store = VuexStore;
  */
 export class Loader {
   constructor(config = {}) {
+    console.log("loading");
+    console.log(window.Vue);
     const vuetify = createVuetify({
       components,
       directives,
