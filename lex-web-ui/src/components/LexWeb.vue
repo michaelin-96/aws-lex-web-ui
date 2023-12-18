@@ -1,48 +1,46 @@
 <template>
-  <div>
-    <v-app id="lex-web" :ui-minimized="isUiMinimized">
-      <min-button
-        :toolbar-color="toolbarColor"
-        :is-ui-minimized="isUiMinimized"
-        @toggleMinimizeUi="toggleMinimizeUi"
-      />
-      <toolbar-container
-        v-if="!isUiMinimized"
-        :userName="userNameValue"
-        :toolbar-title="toolbarTitle"
-        :toolbar-color="toolbarColor"
-        :toolbar-logo="toolbarLogo"
-        :toolbarStartLiveChatLabel="toolbarStartLiveChatLabel"
-        :toolbarStartLiveChatIcon="toolbarStartLiveChatIcon"
-        :toolbarEndLiveChatLabel="toolbarEndLiveChatLabel"
-        :toolbarEndLiveChatIcon="toolbarEndLiveChatIcon"
-        :is-ui-minimized="isUiMinimized"
-        @toggleMinimizeUi="toggleMinimizeUi"
-        @requestLogin="handleRequestLogin"
-        @requestLogout="handleRequestLogout"
-        @requestLiveChat="handleRequestLiveChat"
-        @endLiveChat="handleEndLiveChat"
-        transition="fade-transition"
-      />
-      <v-main v-if="!isUiMinimized">
-        <v-container
-          class="message-list-container"
-          :class="`toolbar-height-${toolbarHeightClassSuffix}`"
-          fluid
-          pa-0
-        >
-          <message-list v-if="!isUiMinimized"/>
-        </v-container>
-      </v-main>
-      <input-container
-        ref="InputContainer"
-        v-if="!isUiMinimized && !hasButtons"
-        v-bind:text-input-placeholder="textInputPlaceholder"
-        v-bind:initial-speech-instruction="initialSpeechInstruction"
-      />
-      <div v-if="isSFXOn" id="sound" aria-hidden="true" />
-    </v-app>
-  </div>
+  <v-app id="lex-web" :ui-minimized="isUiMinimized">
+    <min-button
+      :toolbar-color="toolbarColor"
+      :is-ui-minimized="isUiMinimized"
+      @toggleMinimizeUi="toggleMinimizeUi"
+    />
+    <toolbar-container
+      v-if="!isUiMinimized"
+      :userName="userNameValue"
+      :toolbar-title="toolbarTitle"
+      :toolbar-color="toolbarColor"
+      :toolbar-logo="toolbarLogo"
+      :toolbarStartLiveChatLabel="toolbarStartLiveChatLabel"
+      :toolbarStartLiveChatIcon="toolbarStartLiveChatIcon"
+      :toolbarEndLiveChatLabel="toolbarEndLiveChatLabel"
+      :toolbarEndLiveChatIcon="toolbarEndLiveChatIcon"
+      :is-ui-minimized="isUiMinimized"
+      @toggleMinimizeUi="toggleMinimizeUi"
+      @requestLogin="handleRequestLogin"
+      @requestLogout="handleRequestLogout"
+      @requestLiveChat="handleRequestLiveChat"
+      @endLiveChat="handleEndLiveChat"
+      transition="fade-transition"
+    />
+    <v-main v-if="!isUiMinimized">
+      <v-container
+        class="message-list-container"
+        :class="`toolbar-height-${toolbarHeightClassSuffix}`"
+        fluid
+        pa-0
+      >
+        <message-list v-if="!isUiMinimized"/>
+      </v-container>
+    </v-main>
+    <input-container
+      ref="InputContainer"
+      v-if="!isUiMinimized && !hasButtons"
+      v-bind:text-input-placeholder="textInputPlaceholder"
+      v-bind:initial-speech-instruction="initialSpeechInstruction"
+    />
+    <div v-if="isSFXOn" id="sound" aria-hidden="true" />
+  </v-app>
 </template>
 
 <script>
