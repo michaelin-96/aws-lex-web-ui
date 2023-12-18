@@ -153,15 +153,14 @@
                       <v-icon class="play-icon">mdi-play-circle-outline</v-icon>
                     </v-btn>
                   </div>
-                  <v-menu v-if="message.type === 'human'" v-show="showMessageMenu">
-                    <template v-slot:activator="{ props }">
+                  <!-- <v-menu v-if="message.type === 'human'" v-show="showMessageMenu">
+                    <template #activator="{ props }">
                       <v-btn
                         v-bind="props"
                         icon="more_vert"
                         variant="text"
                         size="x-small"
-                        class="smicon"
-                      ></v-btn>
+                      />
                     </template>
                     <v-list>
                       <v-list-item>
@@ -178,7 +177,7 @@
                         </v-list-item-title>
                       </v-list-item>
                     </v-list>
-                  </v-menu>
+                  </v-menu> -->
                 </div>
               </v-row>
             </v-col>
