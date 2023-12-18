@@ -1,39 +1,39 @@
 <template>
-  <div>
-    <v-row class="recorder-status white">
-      <div class="status-text">
-        <span>{{ statusText }}</span>
-      </div>
-      <div class="voice-controls ml-2">
-        <transition v-on:enter="enterMeter" v-on:leave="leaveMeter" v-bind:css="false">
-          <div v-if="isRecording" class="volume-meter">
-            <meter
-              v-bind:value="volume"
-              min="0.0001"
-              low="0.005"
-              optimum="0.04"
-              high="0.07"
-              max="0.09"
-            ></meter>
-          </div>
-        </transition>
-        <v-progress-linear
-          v-bind:indeterminate="true"
-          v-if="isProcessing"
-          class="processing-bar ma-0"
-        ></v-progress-linear>
-        <transition v-on:enter="enterAudioPlay" v-on:leave="leaveAudioPlay" v-bind:css="false">
-          <v-progress-linear
-            v-if="isBotSpeaking"
-            v-model="audioPlayPercent"
-            class="audio-progress-bar ma-0"
-          ></v-progress-linear>
-        </transition>
-      </div>
-    </v-row>
-  </div>
-</template>
+  <v-row class="recorder-status white">
+    <div class="status-text">
+      <span>{{ statusText }}</span>
+    </div>
 
+    <div class="voice-controls ml-2">
+      <transition v-on:enter="enterMeter" v-on:leave="leaveMeter" v-bind:css="false">
+        <div v-if="isRecording" class="volume-meter">
+          <meter
+            v-bind:value="volume"
+            min="0.0001"
+            low="0.005"
+            optimum="0.04"
+            high="0.07"
+            max="0.09"
+          ></meter>
+        </div>
+      </transition>
+
+      <v-progress-linear
+        v-bind:indeterminate="true"
+        v-if="isProcessing"
+        class="processing-bar ma-0"
+      ></v-progress-linear>
+
+      <transition v-on:enter="enterAudioPlay" v-on:leave="leaveAudioPlay" v-bind:css="false">
+        <v-progress-linear
+          v-if="isBotSpeaking"
+          v-model="audioPlayPercent"
+          class="audio-progress-bar ma-0"
+        ></v-progress-linear>
+      </transition>
+    </div>
+  </v-row>
+</template>
 <script>
 /*
 Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.

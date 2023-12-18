@@ -1,55 +1,53 @@
 <template>
-  <div>
-    <v-card>
-      <div v-if="shouldDisplayResponseCardTitle">
-        <v-card-title
-          v-if="responseCard.title && responseCard.title.trim()"
-          primary-title
-          class="red lighten-5"
-        >
-          <span class="headline">{{ responseCard.title }}</span>
-        </v-card-title>
-      </div>
-      <v-card-text v-if="responseCard.subTitle">
-        <span>{{ responseCard.subTitle }}</span>
-      </v-card-text>
-      <v-card-text v-if="responseCard.subtitle">
-        <span>{{ responseCard.subtitle }}</span>
-      </v-card-text>
-      <v-card-media
-        v-if="responseCard.imageUrl"
-        v-bind:src="responseCard.imageUrl"
-        contain
-        height="33vh"
-      />
-      <v-card-actions v-if="responseCard.buttons" class="button-row">
-        <v-btn
-          v-for="button in responseCard.buttons"
-          v-show="button.text && button.value"
-          v-bind:key="button.id"
-          v-on:click.once="onButtonClick(button.value)"
-          v-bind:disabled="shouldDisableClickedResponseCardButtons"
-          round
-          default
-          v-bind:color="button.text.toLowerCase() === 'more' ? '' : 'accent'"
-          class="secondary--text"
-        >
-          {{ button.text }}
-        </v-btn>
-      </v-card-actions>
-      <v-card-actions v-if="responseCard.attachmentLinkUrl">
-        <v-btn
-          flat
-          class="red lighten-5"
-          tag="a"
-          v-bind:href="responseCard.attachmentLinkUrl"
-          target="_blank"
-        >
-          Open Link
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
+  <v-card>
+    <div v-if="shouldDisplayResponseCardTitle">
+      <v-card-title
+        v-if="responseCard.title && responseCard.title.trim()"
+        primary-title
+        class="red lighten-5"
+      >
+        <span class="headline">{{ responseCard.title }}</span>
+      </v-card-title>
+    </div>
+    <v-card-text v-if="responseCard.subTitle">
+      <span>{{ responseCard.subTitle }}</span>
+    </v-card-text>
+    <v-card-text v-if="responseCard.subtitle">
+      <span>{{ responseCard.subtitle }}</span>
+    </v-card-text>
+    <v-card-media
+      v-if="responseCard.imageUrl"
+      v-bind:src="responseCard.imageUrl"
+      contain
+      height="33vh"
+    />
+    <v-card-actions v-if="responseCard.buttons" class="button-row">
+      <v-btn
+        v-for="button in responseCard.buttons"
+        v-show="button.text && button.value"
+        v-bind:key="button.id"
+        v-on:click.once="onButtonClick(button.value)"
+        v-bind:disabled="shouldDisableClickedResponseCardButtons"
+        round
+        default
+        v-bind:color="button.text.toLowerCase() === 'more' ? '' : 'accent'"
+        class="secondary--text"
+      >
+        {{ button.text }}
+      </v-btn>
+    </v-card-actions>
+    <v-card-actions v-if="responseCard.attachmentLinkUrl">
+      <v-btn
+        flat
+        class="red lighten-5"
+        tag="a"
+        v-bind:href="responseCard.attachmentLinkUrl"
+        target="_blank"
+      >
+        Open Link
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>

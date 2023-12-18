@@ -19,9 +19,9 @@
         single-line
         hide-details
         variant="underlined"
-      />
+      ></v-text-field>
 
-      <recorder-status v-show="!shouldShowTextInput" />
+      <recorder-status v-show="!shouldShowTextInput"></recorder-status>
 
       <!-- separate tooltip as a workaround to support mobile touch events -->
       <!-- tooltip should be before btn to avoid right margin issue in mobile -->
