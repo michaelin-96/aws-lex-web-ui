@@ -152,7 +152,7 @@
                     <v-icon class="play-icon">mdi-play-circle-outline</v-icon>
                   </v-btn>
                 </div>
-                <v-menu v-if="message.type === 'human'">
+                <v-menu v-if="message.type === 'human' && showMessageMenu">
                   <template #activator="{ props }">
                     <v-btn
                       v-bind="props"
