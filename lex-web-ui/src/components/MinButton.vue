@@ -1,47 +1,49 @@
 <template>
-  <v-container fluid class="pa-0 min-button-container">
-    <v-fab-transition>
-      <v-btn
-        bottom
-        dark
-        depressed
-        fixed
-        right
-        v-if="minButtonContent"
-        v-show="isUiMinimized"
-        v-bind:color="toolbarColor"
-        v-on:click.stop="toggleMinimize"
-        v-on="tooltipEventHandlers"
-        aria-label="show chat window"
-        class="min-button min-button-content"
-      >
-        <v-icon left>
-          {{ 'chat' }}
-        </v-icon>
-        {{ minButtonContent }}
-      </v-btn>
-      <!-- seperate button for button with text vs w/o -->
-      <v-btn
-        bottom
-        dark
-        depressed
-        fab
-        fixed
-        right
-        v-else
-        v-show="isUiMinimized"
-        v-bind:color="toolbarColor"
-        v-on:click.stop="toggleMinimize"
-        v-on="tooltipEventHandlers"
-        aria-label="show chat window"
-        class="min-button"
-      >
-        <v-icon>
-          {{ 'chat' }}
-        </v-icon>
-      </v-btn>
-    </v-fab-transition>
-  </v-container>
+  <div>
+    <v-container fluid class="pa-0 min-button-container">
+      <v-fab-transition>
+        <v-btn
+          bottom
+          dark
+          depressed
+          fixed
+          right
+          v-if="minButtonContent"
+          v-show="isUiMinimized"
+          v-bind:color="toolbarColor"
+          v-on:click.stop="toggleMinimize"
+          v-on="tooltipEventHandlers"
+          aria-label="show chat window"
+          class="min-button min-button-content"
+        >
+          <v-icon left>
+            {{ 'chat' }}
+          </v-icon>
+          {{ minButtonContent }}
+        </v-btn>
+        <!-- seperate button for button with text vs w/o -->
+        <v-btn
+          bottom
+          dark
+          depressed
+          fab
+          fixed
+          right
+          v-else
+          v-show="isUiMinimized"
+          v-bind:color="toolbarColor"
+          v-on:click.stop="toggleMinimize"
+          v-on="tooltipEventHandlers"
+          aria-label="show chat window"
+          class="min-button"
+        >
+          <v-icon>
+            {{ 'chat' }}
+          </v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </v-container>
+  </div>
 </template>
 
 <script>

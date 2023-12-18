@@ -1,205 +1,207 @@
 <template>
-  <v-toolbar
-    v-if="!isUiMinimized"
-    :color="toolbarColor"
-    app
-    dark
-    fixed
-    @click="toolbarClickHandler"
-    :dense="this.$store.state.isRunningEmbedded && !isUiMinimized"
-    :class="{ minimized: isUiMinimized }"
-    aria-label="Toolbar with sound FX mute button, minimise chat window button and option chat back a step button"
-  >
-    <img
-      class="toolbar-image"
-      v-if="toolbarLogo"
-      :src="toolbarLogo"
-      alt="logo"
-      aria-hidden="true"
-    />
-    <v-menu v-if="showToolbarMenu">
-      <template v-slot:activator="{ props }">
-        <v-btn
-          v-bind="props"
-          v-show="!isUiMinimized"
-          v-on="tooltipMenuEventHandlers"
-          class="menu"
-          icon="menu"
-          small
-          fab
-          aria-label="menu options"
-        ></v-btn>
-      </template>
-      <v-list>
-        <v-list-item v-if="isEnableLogin">
-          <v-list-item-title v-if="isLoggedIn" @click="requestLogout" aria-label="logout">
-            <v-icon>
-              {{ items[1].icon }}
-            </v-icon>
-            {{ items[1].title }}
-          </v-list-item-title>
-          <v-list-item-title v-if="!isLoggedIn" @click="requestLogin" aria-label="login">
-            <v-icon>
-              {{ items[0].icon }}
-            </v-icon>
-            {{ items[0].title }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="isSaveHistory">
-          <v-list-item-title @click="requestResetHistory" aria-label="clear chat history">
-            <v-icon>
-              {{ items[2].icon }}
-            </v-icon>
-            {{ items[2].title }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="shouldRenderSfxButton && isSFXOn">
-          <v-list-item-title @click="toggleSFXMute" aria-label="mute sound effects">
-            <v-icon>
-              {{ items[3].icon }}
-            </v-icon>
-            {{ items[3].title }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="shouldRenderSfxButton && !isSFXOn">
-          <v-list-item-title @click="toggleSFXMute" aria-label="unmute sound effects">
-            <v-icon>
-              {{ items[4].icon }}
-            </v-icon>
-            {{ items[4].title }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="canLiveChat">
-          <v-list-item-title @click="requestLiveChat" aria-label="request live chat">
-            <v-icon>
-              {{ toolbarStartLiveChatIcon }}
-            </v-icon>
-            {{ toolbarStartLiveChatLabel }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="isLiveChat">
-          <v-list-item-title @click="endLiveChat" aria-label="end live chat">
-            <v-icon>
-              {{ toolbarEndLiveChatIcon }}
-            </v-icon>
-            {{ toolbarEndLiveChatLabel }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item
-          v-if="isLocaleSelectable"
-          :disabled="restrictLocaleChanges"
-        >
-          <v-list-item v-for="(locale, index) in locales" :key="index">
-            <v-list-item-title @click="setLocale(locale)">
-              {{ locale }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-
-    <div class="nav-buttons">
-      <v-tooltip
-        text="Previous"
-        v-model="prevNav"
-        activator=".nav-button-prev"
-        content-class="tooltip-custom"
-        right
-      >
+  <div>
+    <v-toolbar
+      v-if="!isUiMinimized"
+      :color="toolbarColor"
+      app
+      dark
+      fixed
+      @click="toolbarClickHandler"
+      :dense="this.$store.state.isRunningEmbedded && !isUiMinimized"
+      :class="{ minimized: isUiMinimized }"
+      aria-label="Toolbar with sound FX mute button, minimise chat window button and option chat back a step button"
+    >
+      <img
+        class="toolbar-image"
+        v-if="toolbarLogo"
+        :src="toolbarLogo"
+        alt="logo"
+        aria-hidden="true"
+      />
+      <v-menu v-if="showToolbarMenu">
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"
+            v-show="!isUiMinimized"
+            v-on="tooltipMenuEventHandlers"
+            class="menu"
+            icon="menu"
             small
-            :disabled="isLexProcessing"
-            class="nav-button-prev"
-            v-on="prevNavEventHandlers"
-            @click="onPrev"
-            v-show="hasPrevUtterance && !isUiMinimized && shouldRenderBackButton"
-            aria-label="go back to previous message"
-            icon="arrow_back"
+            fab
+            aria-label="menu options"
           ></v-btn>
         </template>
+        <v-list>
+          <v-list-item v-if="isEnableLogin">
+            <v-list-item-title v-if="isLoggedIn" @click="requestLogout" aria-label="logout">
+              <v-icon>
+                {{ items[1].icon }}
+              </v-icon>
+              {{ items[1].title }}
+            </v-list-item-title>
+            <v-list-item-title v-if="!isLoggedIn" @click="requestLogin" aria-label="login">
+              <v-icon>
+                {{ items[0].icon }}
+              </v-icon>
+              {{ items[0].title }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isSaveHistory">
+            <v-list-item-title @click="requestResetHistory" aria-label="clear chat history">
+              <v-icon>
+                {{ items[2].icon }}
+              </v-icon>
+              {{ items[2].title }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="shouldRenderSfxButton && isSFXOn">
+            <v-list-item-title @click="toggleSFXMute" aria-label="mute sound effects">
+              <v-icon>
+                {{ items[3].icon }}
+              </v-icon>
+              {{ items[3].title }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="shouldRenderSfxButton && !isSFXOn">
+            <v-list-item-title @click="toggleSFXMute" aria-label="unmute sound effects">
+              <v-icon>
+                {{ items[4].icon }}
+              </v-icon>
+              {{ items[4].title }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="canLiveChat">
+            <v-list-item-title @click="requestLiveChat" aria-label="request live chat">
+              <v-icon>
+                {{ toolbarStartLiveChatIcon }}
+              </v-icon>
+              {{ toolbarStartLiveChatLabel }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isLiveChat">
+            <v-list-item-title @click="endLiveChat" aria-label="end live chat">
+              <v-icon>
+                {{ toolbarEndLiveChatIcon }}
+              </v-icon>
+              {{ toolbarEndLiveChatLabel }}
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            v-if="isLocaleSelectable"
+            :disabled="restrictLocaleChanges"
+          >
+            <v-list-item v-for="(locale, index) in locales" :key="index">
+              <v-list-item-title @click="setLocale(locale)">
+                {{ locale }}
+              </v-list-item-title>
+            </v-list-item>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <div class="nav-buttons">
+        <v-tooltip
+          text="Previous"
+          v-model="prevNav"
+          activator=".nav-button-prev"
+          content-class="tooltip-custom"
+          right
+        >
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              small
+              :disabled="isLexProcessing"
+              class="nav-button-prev"
+              v-on="prevNavEventHandlers"
+              @click="onPrev"
+              v-show="hasPrevUtterance && !isUiMinimized && shouldRenderBackButton"
+              aria-label="go back to previous message"
+              icon="arrow_back"
+            ></v-btn>
+          </template>
+        </v-tooltip>
+      </div>
+
+      <v-toolbar-title
+        class="hidden-xs-and-down toolbar-title"
+        @click.stop="toggleMinimize"
+        v-show="!isUiMinimized"
+      >
+        <h2>{{ toolbarTitle }} {{ userName }}</h2>
+      </v-toolbar-title> 
+
+      <v-spacer />
+      <!-- tooltip should be before btn to avoid right margin issue in mobile -->
+      <v-tooltip
+        v-model="shouldShowTooltip"
+        content-class="tooltip-custom"
+        activator=".min-max-toggle"
+        left
+      >
+        <span id="min-max-tooltip">{{ toolTipMinimize }}</span>
       </v-tooltip>
-    </div>
+      <v-tooltip
+        v-model="shouldShowHelpTooltip"
+        content-class="tooltip-custom"
+        activator=".help-toggle"
+        left
+      >
+        <span id="help-tooltip">help</span>
+      </v-tooltip>
+      <v-tooltip
+        v-model="shouldShowEndLiveChatTooltip"
+        content-class="tooltip-custom"
+        activator=".end-live-chat-btn"
+        left
+      >
+        <span id="end-live-chat-tooltip">{{ toolbarEndLiveChatLabel }}</span>
+      </v-tooltip>
+      <v-tooltip
+        v-model="shouldShowMenuTooltip"
+        content-class="tooltip-custom"
+        activator=".menu"
+        right
+      >
+        <span id="menu-tooltip">menu</span>
+      </v-tooltip>
+      <span v-if="isLocaleSelectable" class="localeInfo">{{ currentLocale }}</span>
+      <v-btn
+        v-if="shouldRenderHelpButton && !isLiveChat && !isUiMinimized"
+        @click="sendHelp"
+        v-on="tooltipHelpEventHandlers"
+        v-bind:disabled="isLexProcessing"
+        icon
+        class="help-toggle"
+      >
+        <v-icon>help_outline</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="isLiveChat && !isUiMinimized"
+        @click="endLiveChat"
+        v-on="tooltipEndLiveChatEventHandlers"
+        v-bind:disabled="!isLiveChat"
+        icon
+        class="end-live-chat-btn"
+      >
+        <span class="hangup-text">{{ toolbarEndLiveChatLabel }}</span>
+        <v-icon class="call-end"> {{ toolbarEndLiveChatIcon }} </v-icon>
+      </v-btn>
 
-    <v-toolbar-title
-      class="hidden-xs-and-down toolbar-title"
-      @click.stop="toggleMinimize"
-      v-show="!isUiMinimized"
-    >
-      <h2>{{ toolbarTitle }} {{ userName }}</h2>
-    </v-toolbar-title> 
-
-    <v-spacer />
-    <!-- tooltip should be before btn to avoid right margin issue in mobile -->
-    <v-tooltip
-      v-model="shouldShowTooltip"
-      content-class="tooltip-custom"
-      activator=".min-max-toggle"
-      left
-    >
-      <span id="min-max-tooltip">{{ toolTipMinimize }}</span>
-    </v-tooltip>
-    <v-tooltip
-      v-model="shouldShowHelpTooltip"
-      content-class="tooltip-custom"
-      activator=".help-toggle"
-      left
-    >
-      <span id="help-tooltip">help</span>
-    </v-tooltip>
-    <v-tooltip
-      v-model="shouldShowEndLiveChatTooltip"
-      content-class="tooltip-custom"
-      activator=".end-live-chat-btn"
-      left
-    >
-      <span id="end-live-chat-tooltip">{{ toolbarEndLiveChatLabel }}</span>
-    </v-tooltip>
-    <v-tooltip
-      v-model="shouldShowMenuTooltip"
-      content-class="tooltip-custom"
-      activator=".menu"
-      right
-    >
-      <span id="menu-tooltip">menu</span>
-    </v-tooltip>
-    <span v-if="isLocaleSelectable" class="localeInfo">{{ currentLocale }}</span>
-    <v-btn
-      v-if="shouldRenderHelpButton && !isLiveChat && !isUiMinimized"
-      @click="sendHelp"
-      v-on="tooltipHelpEventHandlers"
-      v-bind:disabled="isLexProcessing"
-      icon
-      class="help-toggle"
-    >
-      <v-icon>help_outline</v-icon>
-    </v-btn>
-    <v-btn
-      v-if="isLiveChat && !isUiMinimized"
-      @click="endLiveChat"
-      v-on="tooltipEndLiveChatEventHandlers"
-      v-bind:disabled="!isLiveChat"
-      icon
-      class="end-live-chat-btn"
-    >
-      <span class="hangup-text">{{ toolbarEndLiveChatLabel }}</span>
-      <v-icon class="call-end"> {{ toolbarEndLiveChatIcon }} </v-icon>
-    </v-btn>
-
-    <v-btn
-      v-if="$store.state.isRunningEmbedded"
-      @click.stop="toggleMinimize"
-      v-on="tooltipEventHandlers"
-      class="min-max-toggle"
-      icon
-      v-bind:aria-label="isUiMinimized ? 'chat' : 'minimize chat window toggle'"
-    >
-      <v-icon>
-        {{ isUiMinimized ? 'chat' : 'arrow_drop_down' }}
-      </v-icon>
-    </v-btn>
-  </v-toolbar>
+      <v-btn
+        v-if="$store.state.isRunningEmbedded"
+        @click.stop="toggleMinimize"
+        v-on="tooltipEventHandlers"
+        class="min-max-toggle"
+        icon
+        v-bind:aria-label="isUiMinimized ? 'chat' : 'minimize chat window toggle'"
+      >
+        <v-icon>
+          {{ isUiMinimized ? 'chat' : 'arrow_drop_down' }}
+        </v-icon>
+      </v-btn>
+    </v-toolbar>
+  </div>
 </template>
 
 <script>

@@ -1,26 +1,27 @@
 <template>
-  <div
-    v-if="message.text && (message.type === 'human' || message.type === 'feedback')"
-    class="message-text"
-  >
-    <span class="sr-only">I say: </span>{{ message.text }}
-  </div>
-  <div
-    v-else-if="altHtmlMessage && AllowSuperDangerousHTMLInMessage"
-    v-html="altHtmlMessage"
-    class="message-text"
-  ></div>
-  <div
-    v-else-if="message.text && shouldRenderAsHtml"
-    v-html="botMessageAsHtml"
-    class="message-text"
-  ></div>
-  <div
-    v-else-if="message.text && (message.type === 'bot' || message.type === 'agent')"
-    class="message-text bot-message-plain"
-  >
-    <span class="sr-only">{{ message.type }} says: </span
-    >{{ shouldStripTags ? stripTagsFromMessage(message.text) : message.text }}
+  <div>
+    <div
+      v-if="message.text && (message.type === 'human' || message.type === 'feedback')"
+      class="message-text"
+    >
+      <span class="sr-only">I say: </span>{{ message.text }}
+    </div>
+    <div
+      v-else-if="altHtmlMessage && AllowSuperDangerousHTMLInMessage"
+      class="message-text"
+      v-html="altHtmlMessage"
+    />
+    <div
+      v-else-if="message.text && shouldRenderAsHtml"
+      class="message-text"
+      v-html="botMessageAsHtml"
+    />
+    <div
+      v-else-if="message.text && (message.type === 'bot' || message.type === 'agent')"
+      class="message-text bot-message-plain"
+    >
+      <span class="sr-only">{{ message.type }} says: </span>{{ shouldStripTags ? stripTagsFromMessage(message.text) : message.text }}
+    </div>
   </div>
 </template>
 

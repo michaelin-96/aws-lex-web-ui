@@ -1,59 +1,61 @@
 <template>
-  <v-container fluid>
-    <v-toolbar color="white" :dense="this.$store.state.isRunningEmbedded">
-      <!--
-        using v-show instead of v-if to make recorder-status transition work
-      -->
-      <v-text-field
-        :label="textInputPlaceholder"
-        v-show="shouldShowTextInput"
-        :disabled="isLexProcessing"
-        v-model="textInput"
-        @keyup.enter.stop="postTextMessage"
-        @focus="onTextFieldFocus"
-        @blur="onTextFieldBlur"
-        @input="onKeyUp"
-        ref="textInput"
-        id="text-input"
-        name="text-input"
-        single-line
-        hide-details
-        variant="underlined"
-      ></v-text-field>
-
-      <recorder-status v-show="!shouldShowTextInput"></recorder-status>
-
-      <!-- separate tooltip as a workaround to support mobile touch events -->
-      <!-- tooltip should be before btn to avoid right margin issue in mobile -->
-      <v-btn
-        v-if="shouldShowSendButton"
-        @click="postTextMessage"
-        v-on="tooltipEventHandlers"
-        :disabled="isLexProcessing || isSendButtonDisabled"
-        ref="send"
-        class="icon-color input-button"
-        aria-label="Send Message"
-      >
-        <v-tooltip activator="parent" location="start">
-          <span id="input-button-tooltip">{{ inputButtonTooltip }}</span>
-        </v-tooltip>
-        <v-icon size="x-large">send</v-icon>
-      </v-btn>
-      <v-btn
-        v-if="!shouldShowSendButton && !isModeLiveChat"
-        @click="onMicClick"
-        v-on="tooltipEventHandlers"
-        :disabled="isMicButtonDisabled"
-        ref="mic"
-        class="icon-color input-button"
-      >
-        <v-tooltip activator="parent" v-model="shouldShowTooltip" location="start">
-          <span id="input-button-tooltip">{{ inputButtonTooltip }}</span>
-        </v-tooltip>
-        <v-icon size="x-large">{{ micButtonIcon }}</v-icon>
-      </v-btn>
-    </v-toolbar>
-  </v-container>
+  <div>
+    <v-container fluid>
+      <v-toolbar color="white" :dense="this.$store.state.isRunningEmbedded">
+        <!--
+          using v-show instead of v-if to make recorder-status transition work
+        -->
+        <v-text-field
+          :label="textInputPlaceholder"
+          v-show="shouldShowTextInput"
+          :disabled="isLexProcessing"
+          v-model="textInput"
+          @keyup.enter.stop="postTextMessage"
+          @focus="onTextFieldFocus"
+          @blur="onTextFieldBlur"
+          @input="onKeyUp"
+          ref="textInput"
+          id="text-input"
+          name="text-input"
+          single-line
+          hide-details
+          variant="underlined"
+        />
+  
+        <recorder-status v-show="!shouldShowTextInput" />
+  
+        <!-- separate tooltip as a workaround to support mobile touch events -->
+        <!-- tooltip should be before btn to avoid right margin issue in mobile -->
+        <v-btn
+          v-if="shouldShowSendButton"
+          @click="postTextMessage"
+          v-on="tooltipEventHandlers"
+          :disabled="isLexProcessing || isSendButtonDisabled"
+          ref="send"
+          class="icon-color input-button"
+          aria-label="Send Message"
+        >
+          <v-tooltip activator="parent" location="start">
+            <span id="input-button-tooltip">{{ inputButtonTooltip }}</span>
+          </v-tooltip>
+          <v-icon size="x-large">send</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="!shouldShowSendButton && !isModeLiveChat"
+          @click="onMicClick"
+          v-on="tooltipEventHandlers"
+          :disabled="isMicButtonDisabled"
+          ref="mic"
+          class="icon-color input-button"
+        >
+          <v-tooltip activator="parent" v-model="shouldShowTooltip" location="start">
+            <span id="input-button-tooltip">{{ inputButtonTooltip }}</span>
+          </v-tooltip>
+          <v-icon size="x-large">{{ micButtonIcon }}</v-icon>
+        </v-btn>
+      </v-toolbar>
+    </v-container>
+  </div>
 </template>
 
 <script>
