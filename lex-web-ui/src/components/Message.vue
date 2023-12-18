@@ -159,6 +159,7 @@
                       icon="more_vert"
                       variant="text"
                       size="x-small"
+                      class="smicon"
                     />
                   </template>
                   <v-list>
