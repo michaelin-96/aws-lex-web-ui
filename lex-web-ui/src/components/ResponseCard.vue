@@ -5,16 +5,16 @@
       <v-card-title
         v-if="responseCard.title && responseCard.title.trim()"
         primary-title
-        class="red lighten-5"
+        class="red lighten-5 headline"
       >
-        <span class="headline">{{ responseCard.title }}</span>
+        {{ responseCard.title }}
       </v-card-title>
     </div>
     <v-card-text v-if="responseCard.subTitle">
-      <span>{{ responseCard.subTitle }}</span>
+      {{ responseCard.subTitle }}
     </v-card-text>
     <v-card-text v-if="responseCard.subtitle">
-      <span>{{ responseCard.subtitle }}</span>
+      {{ responseCard.subtitle }}
     </v-card-text>
     <v-img
       v-if="responseCard.imageUrl"
