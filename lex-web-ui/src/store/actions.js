@@ -34,6 +34,7 @@ import silentMp3 from '../assets/silent.mp3'
 
 import LexClient from '../lib/lex/client'
 
+//TODO: Replace SDK v2
 import * as AWS from 'aws-sdk'
 
 // non-state variables that may be mutated outside of store
@@ -849,6 +850,7 @@ export default {
     }
 
     const uri = new URL(context.state.config.connect.apiGatewayEndpoint)
+    //TODO: Replace
     const endpoint = new AWS.Endpoint(uri.hostname)
     const req = new AWS.HttpRequest(endpoint, context.state.config.region)
     req.method = 'POST'
@@ -858,6 +860,7 @@ export default {
     req.headers.Host = endpoint.host
     req.headers['Content-Length'] = Buffer.byteLength(req.body)
 
+    //TODO: Replace
     const signer = new AWS.Signers.V4(req, 'execute-api')
     signer.addAuthorization(awsCredentials, new Date())
 

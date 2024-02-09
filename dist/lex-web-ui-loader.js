@@ -7282,7 +7282,23 @@ var dependenciesFullPage = {
     name: 'AWS',
     url: './aws-sdk-2.903.0.js',
     canUseMin: true
-  }, {
+  },
+  // {
+  //   name: 'LexRuntime',
+  //   url: './aws-sdk-client-lex-runtime-service-3.507.0.js',
+  //   canUseMin: false,
+  // },
+  // {
+  //   name: 'LexRuntimeV2',
+  //   url: './aws-sdk-client-lex-runtime-v2-3.509.0.js',
+  //   canUseMin: false,
+  // },
+  // {
+  //   name: 'Polly',
+  //   url: './aws-sdk-client-polly-3.509.0.js',
+  //   canUseMin: false,
+  // },
+  {
     name: 'Vue',
     url: './3.3.10_dist_vue.js',
     canUseMin: false
@@ -7320,7 +7336,23 @@ var dependenciesIframe = {
     name: 'AWS',
     url: './aws-sdk-2.903.0.js',
     canUseMin: true
-  }],
+  }
+  // {
+  //   name: 'LexRuntime',
+  //   url: './aws-sdk-client-lex-runtime-service-3.507.0.js',
+  //   canUseMin: false,
+  // },
+  // {
+  //   name: 'LexRuntimeV2',
+  //   url: './aws-sdk-client-lex-runtime-v2-3.509.0.js',
+  //   canUseMin: false,
+  // },
+  // {
+  //   name: 'Polly',
+  //   url: './aws-sdk-client-polly-3.509.0.js',
+  //   canUseMin: false,
+  // },
+  ],
   css: [{
     name: 'lex-web-ui-loader',
     url: './lex-web-ui-loader.css'
