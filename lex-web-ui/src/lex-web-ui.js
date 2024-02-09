@@ -18,8 +18,13 @@ License for the specific language governing permissions and limitations under th
  * Exports Loader as the plugin constructor
  * and Store as store that can be used with Vuex.Store()
  */
-import { Config as AWSConfig, CognitoIdentityCredentials }
+//TODO: replace Config & CognitoIdentityCredentials
+import { CognitoIdentityCredentials }
   from 'aws-sdk/global';
+// import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider';
+// import { LexRuntimeService as LexRuntime } from "@aws-sdk/client-lex-runtime-service";
+// import { LexRuntimeV2 } from "@aws-sdk/client-lex-runtime-v2";
+// import { Polly } from "@aws-sdk/client-polly"
 import LexRuntime from 'aws-sdk/clients/lexruntime';
 import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
 import Polly from 'aws-sdk/clients/polly';
@@ -139,9 +144,10 @@ export class Loader {
 
     const mergedConfig = mergeConfig(defaultConfig, config);
 
-    const AWSConfigConstructor = (window.AWS && window.AWS.Config) ?
-      window.AWS.Config :
-      AWSConfig;
+    //TODO: Replace AWS with self hosted services
+    // const AWSConfigConstructor = (window.AWS && window.AWS.Config) ?
+    //   window.AWS.Config :
+    //   AWSConfig;
 
     const CognitoConstructor =
       (window.AWS && window.AWS.CognitoIdentityCredentials) ?
@@ -170,10 +176,15 @@ export class Loader {
       { region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1' },
     );
 
-    const awsConfig = new AWSConfigConstructor({
+    // const awsConfig = new AWSConfigConstructor({
+    //   region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1',
+    //   credentials,
+    // });
+
+    const awsConfig = {
       region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1',
       credentials,
-    });
+    };
 
     const lexRuntimeClient = new LexRuntimeConstructor(awsConfig);
     const lexRuntimeV2Client = new LexRuntimeConstructorV2(awsConfig);

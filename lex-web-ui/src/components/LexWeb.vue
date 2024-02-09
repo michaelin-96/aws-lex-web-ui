@@ -63,10 +63,15 @@ import MinButton from '@/components/MinButton.vue'
 import ToolbarContainer from '@/components/ToolbarContainer.vue'
 import MessageList from '@/components/MessageList.vue'
 import InputContainer from '@/components/InputContainer.vue'
+// import { LexRuntimeService as LexRuntime } from "@aws-sdk/client-lex-runtime-service";
+// import { LexRuntimeV2 } from "@aws-sdk/client-lex-runtime-v2";
 import * as LexRuntime from 'aws-sdk/clients/lexruntime'
 import * as LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2'
 
-import { Config as AWSConfig, CognitoIdentityCredentials } from 'aws-sdk/global'
+//TODO: Replace
+import { CognitoIdentityCredentials } from 'aws-sdk/global'
+// import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider';
+
 
 console.log("here");
 export default {
@@ -184,8 +189,10 @@ export default {
           return Promise.reject(new Error('no cognito.poolId found in config'))
         }
 
-        const AWSConfigConstructor = window.AWS && window.AWS.Config ? window.AWS.Config : AWSConfig
+        //TODO: Replace
+        // const AWSConfigConstructor = window.AWS && window.AWS.Config ? window.AWS.Config : AWSConfig
 
+        //TODO: Replace
         const CognitoConstructor =
           window.AWS && window.AWS.CognitoIdentityCredentials
             ? window.AWS.CognitoIdentityCredentials
@@ -199,10 +206,10 @@ export default {
 
         const credentials = new CognitoConstructor({ IdentityPoolId: poolId }, { region: region })
 
-        const awsConfig = new AWSConfigConstructor({
+        const awsConfig = {
           region: region,
           credentials
-        })
+        };
 
         this.$lexWebUi.lexRuntimeClient = new LexRuntimeConstructor(awsConfig)
         this.$lexWebUi.lexRuntimeV2Client = new LexRuntimeConstructorV2(awsConfig)
