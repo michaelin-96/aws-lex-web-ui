@@ -66,9 +66,10 @@ import InputContainer from '@/components/InputContainer.vue'
 import * as LexRuntime from 'aws-sdk/clients/lexruntime'
 import * as LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2'
 
-import { Config as AWSConfig, CognitoIdentityCredentials } from 'aws-sdk/global'
+import { CognitoIdentityCredentials } from 'aws-sdk/global'
+import { fromCognitoIdentityPool } from '@aws-sdk/credential-providers';
 
-console.log("here");
+
 export default {
   name: 'lex-web',
   data() {
@@ -184,7 +185,7 @@ export default {
           return Promise.reject(new Error('no cognito.poolId found in config'))
         }
 
-        const AWSConfigConstructor = window.AWS && window.AWS.Config ? window.AWS.Config : AWSConfig
+        // const AWSConfigConstructor = {window.AWS && window.AWS.Config ? window.AWS.Config : AWSConfig}
 
         const CognitoConstructor =
           window.AWS && window.AWS.CognitoIdentityCredentials
@@ -199,13 +200,13 @@ export default {
 
         const credentials = new CognitoConstructor({ IdentityPoolId: poolId }, { region: region })
 
-        const awsConfig = new AWSConfigConstructor({
+        const AWSConfigConstructor = {
           region: region,
           credentials
-        })
+        }
 
-        this.$lexWebUi.lexRuntimeClient = new LexRuntimeConstructor(awsConfig)
-        this.$lexWebUi.lexRuntimeV2Client = new LexRuntimeConstructorV2(awsConfig)
+        this.$lexWebUi.lexRuntimeClient = new LexRuntimeConstructor(AWSConfigConstructor)
+        this.$lexWebUi.lexRuntimeV2Client = new LexRuntimeConstructorV2(AWSConfigConstructor)
         /* eslint-disable no-console */
         console.log(`lexRuntimeV2Client : ${JSON.stringify(this.$lexWebUi.lexRuntimeV2Client)}`)
 

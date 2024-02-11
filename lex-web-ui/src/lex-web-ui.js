@@ -18,7 +18,7 @@ License for the specific language governing permissions and limitations under th
  * Exports Loader as the plugin constructor
  * and Store as store that can be used with Vuex.Store()
  */
-import { Config as AWSConfig, CognitoIdentityCredentials }
+import { CognitoIdentityCredentials }
   from 'aws-sdk/global';
 import LexRuntime from 'aws-sdk/clients/lexruntime';
 import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
@@ -139,9 +139,9 @@ export class Loader {
 
     const mergedConfig = mergeConfig(defaultConfig, config);
 
-    const AWSConfigConstructor = (window.AWS && window.AWS.Config) ?
-      window.AWS.Config :
-      AWSConfig;
+    // const AWSConfigConstructor = (window.AWS && window.AWS.Config) ?
+    //   window.AWS.Config :
+    //   AWSConfig;
 
     const CognitoConstructor =
       (window.AWS && window.AWS.CognitoIdentityCredentials) ?
@@ -160,7 +160,7 @@ export class Loader {
       window.AWS.LexRuntimeV2 :
       LexRuntimeV2;
 
-    if (!AWSConfigConstructor || !CognitoConstructor || !PollyConstructor
+    if (!CognitoConstructor || !PollyConstructor
       || !LexRuntimeConstructor || !LexRuntimeConstructorV2) {
       throw new Error('unable to find AWS SDK');
     }
@@ -170,22 +170,22 @@ export class Loader {
       { region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1' },
     );
 
-    const awsConfig = new AWSConfigConstructor({
+    const AWSConfigConstructor = {
       region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1',
       credentials,
-    });
+    };
 
-    const lexRuntimeClient = new LexRuntimeConstructor(awsConfig);
-    const lexRuntimeV2Client = new LexRuntimeConstructorV2(awsConfig);
+    const lexRuntimeClient = new LexRuntimeConstructor(AWSConfigConstructor);
+    const lexRuntimeV2Client = new LexRuntimeConstructorV2(AWSConfigConstructor);
     /* eslint-disable no-console */
     const pollyClient = (
       typeof mergedConfig.recorder === 'undefined' ||
       (mergedConfig.recorder && mergedConfig.recorder.enable !== false)
-    ) ? new PollyConstructor(awsConfig) : null;
+    ) ? new PollyConstructor(AWSConfigConstructor) : null;
 
     app.use(Plugin, {
       config: mergedConfig,
-      awsConfig,
+      awsConfig: AWSConfigConstructor,
       lexRuntimeClient,
       lexRuntimeV2Client,
       pollyClient,
