@@ -65,6 +65,9 @@ import MessageList from '@/components/MessageList.vue'
 import InputContainer from '@/components/InputContainer.vue'
 import * as LexRuntime from 'aws-sdk/clients/lexruntime'
 import * as LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2'
+// import { LexRuntimeV2Client as LexRuntimeV2 } from '@aws-sdk/client-lex-runtime-v2'
+import Polly from 'aws-sdk/clients/polly';
+
 
 import { CognitoIdentityCredentials } from 'aws-sdk/global'
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-providers';
@@ -198,6 +201,8 @@ export default {
         const LexRuntimeConstructorV2 =
           window.AWS && window.AWS.LexRuntimeV2 ? window.AWS.LexRuntimeV2 : LexRuntimeV2
 
+        const PollyConstructor = (window.AWS && window.AWS.Polly) ? window.AWS.Polly : Polly;
+
         const credentials = new CognitoConstructor({ IdentityPoolId: poolId }, { region: region })
 
         const AWSConfigConstructor = {
@@ -206,7 +211,13 @@ export default {
         }
 
         this.$lexWebUi.lexRuntimeClient = new LexRuntimeConstructor(AWSConfigConstructor)
+        console.log('lexWebUi.lexRuntimeClient', this.$lexWebUi.lexRuntimeClient)
         this.$lexWebUi.lexRuntimeV2Client = new LexRuntimeConstructorV2(AWSConfigConstructor)
+        console.log('lexWebUi.lexRuntimeV2Client', this.$lexWebUi.lexRuntimeV2Client)
+        this.$lexWebUi.PollyClient = new PollyConstructor(AWSConfigConstructor)
+        console.log('lexWebUi.pollyClient', this.$lexWebUi.PollyClient)
+
+
         /* eslint-disable no-console */
         console.log(`lexRuntimeV2Client : ${JSON.stringify(this.$lexWebUi.lexRuntimeV2Client)}`)
 

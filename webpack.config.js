@@ -26,15 +26,17 @@ module.exports = (env) => {
       library: 'ChatBotUiLoader',
       libraryExport: 'ChatBotUiLoader',
       libraryTarget: 'umd',
+      publicPath: 'auto',
     },
     resolve: {
-        fallback: {
-            util: require.resolve('util/'),
-            crypto: require.resolve('crypto-browserify'),
-            buffer: require.resolve('buffer/'),
-            stream: require.resolve('stream-browserify'),
-            'process/browser': require.resolve('process/browser'),
-        },
+      modules: [path.resolve(__dirname, './lex-web-ui/'), 'node_modules'] ,
+      fallback: {
+          util: require.resolve('util/'),
+          crypto: require.resolve('crypto-browserify'),
+          buffer: require.resolve('buffer/'),
+          stream: require.resolve('stream-browserify'),
+          'process/browser': require.resolve('process/browser'),
+      },
     },
     module: {
       rules: [
@@ -163,6 +165,6 @@ module.exports = (env) => {
       hints: false,
       maxEntrypointSize: 512000,
       maxAssetSize: 512000
-  },
+    },
   };
 };

@@ -7297,7 +7297,7 @@ var dependenciesFullPage = {
   }, {
     name: 'LexWebUi',
     url: './lex-web-ui.js',
-    canUseMin: true
+    canUseMin: false
   }],
   css: [{
     name: 'roboto-material-icons',

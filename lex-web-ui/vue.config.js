@@ -132,6 +132,7 @@ function chainWebpackLib(
     {'vuex': 'Vuex'},
     'vue-router',
     {'vuetify': 'Vuetify'},
+    // remove when migration is done
     /^aws-sdk\/.+$/,
   ]);
 

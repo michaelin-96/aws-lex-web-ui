@@ -20,8 +20,10 @@ License for the specific language governing permissions and limitations under th
  */
 import { CognitoIdentityCredentials }
   from 'aws-sdk/global';
+import { fromCognitoIdentityPool } from '@aws-sdk/credential-providers';
 import LexRuntime from 'aws-sdk/clients/lexruntime';
-import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
+// import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
+import { LexRuntimeV2Client as LexRuntimeV2 }  from '@aws-sdk/client-lex-runtime-v2';
 import Polly from 'aws-sdk/clients/polly';
 
 import LexWeb from './components/LexWeb';
@@ -51,6 +53,20 @@ const errorComponent = {
   template: '<p>An error ocurred...</p>',
 };
 
+// //Get credentials
+
+// async function getCredentials(context) {
+//   console.log('context', context.cognito.poolId);
+//   const credentialProvider = fromCognitoIdentityPool({
+//     identityPoolId: context.cognito.poolId,
+//     clientConfig: { region: context.region || context.cognito.poolId.split(':')[0] || 'us-east-1'},
+//   })
+//   const credentials = await credentialProvider()
+//   return credentials
+// }
+
+// const credsv3 = await getCredentials(defaultConfig)
+
 export const testComponent = {
   template: '<div>I am async!</div>',
 };
@@ -74,18 +90,16 @@ export const Plugin = {
     name = '$lexWebUi',
     componentName = 'lex-web-ui',
     awsConfig,
-    lexRuntimeClient,
-    lexRuntimeV2Client,
-    pollyClient,
+    // lexRuntimeClient,
+    // pollyClient,
     component = AsyncComponent,
     config = defaultConfig,
   }) {
     const value = {
       config,
       awsConfig,
-      lexRuntimeClient,
-      lexRuntimeV2Client,
-      pollyClient,
+      // lexRuntimeClient,
+      // pollyClient,
     };
     // add custom property to Vue
     // for example, access this in a component via this.$lexWebUi
@@ -143,54 +157,82 @@ export class Loader {
     //   window.AWS.Config :
     //   AWSConfig;
 
-    const CognitoConstructor =
-      (window.AWS && window.AWS.CognitoIdentityCredentials) ?
-        window.AWS.CognitoIdentityCredentials :
-        CognitoIdentityCredentials;
+    console.log(window.AWS)
+    const CognitoConstructor = window.AWS.CognitoIdentityCredentials;
+      // (window && window.AWS.CognitoIdentityCredentials) ?
+      //   window.AWS.CognitoIdentityCredentials :
+      //   CognitoIdentityCredentials;
 
-    const PollyConstructor = (window.AWS && window.AWS.Polly) ?
-      window.AWS.Polly :
-      Polly;
+    // const PollyConstructor = (window.AWS && window.AWS.Polly) ?
+    //   window.AWS.Polly :
+    //   Polly;
 
-    const LexRuntimeConstructor = (window.AWS && window.AWS.LexRuntime) ?
-      window.AWS.LexRuntime :
-      LexRuntime;
+    // const LexRuntimeConstructor = (window.AWS && window.AWS.LexRuntime) ?
+    //   window.AWS.LexRuntime :
+    //   LexRuntime;
 
-    const LexRuntimeConstructorV2 = (window.AWS && window.AWS.LexRuntimeV2) ?
-      window.AWS.LexRuntimeV2 :
-      LexRuntimeV2;
+    // const LexRuntimeConstructorV2 = LexRuntimeV2;
 
-    if (!CognitoConstructor || !PollyConstructor
-      || !LexRuntimeConstructor || !LexRuntimeConstructorV2) {
-      throw new Error('unable to find AWS SDK');
-    }
+    // if (!CognitoConstructor || !PollyConstructor
+    //   || !LexRuntimeConstructor ) {
+    //   throw new Error('unable to find AWS SDK');
+    // }
 
     const credentials = new CognitoConstructor(
       { IdentityPoolId: mergedConfig.cognito.poolId },
       { region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1' },
     );
+    
+    console.log('region', mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1' )
+    const credentialsv3 = this.getCredentials(mergedConfig);
 
+    console.log('credentials v2', credentials);
+    console.log('credentials v3', credentialsv3);
+    // // console.log('credsv3', credsv3)
+
+    
     const AWSConfigConstructor = {
       region: mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1',
       credentials,
     };
 
-    const lexRuntimeClient = new LexRuntimeConstructor(AWSConfigConstructor);
-    const lexRuntimeV2Client = new LexRuntimeConstructorV2(AWSConfigConstructor);
-    /* eslint-disable no-console */
-    const pollyClient = (
-      typeof mergedConfig.recorder === 'undefined' ||
-      (mergedConfig.recorder && mergedConfig.recorder.enable !== false)
-    ) ? new PollyConstructor(AWSConfigConstructor) : null;
+    // const lexRuntimeClient = new LexRuntimeConstructor(AWSConfigConstructor);
+    // // const lexRuntimeV2Client = new LexRuntimeConstructorV2(AWSConfigConstructor);
+    // /* eslint-disable no-console */
+    // const pollyClient = (
+    //   typeof mergedConfig.recorder === 'undefined' ||
+    //   (mergedConfig.recorder && mergedConfig.recorder.enable !== false)
+    // ) ? new PollyConstructor(AWSConfigConstructor) : null;
 
     app.use(Plugin, {
       config: mergedConfig,
       awsConfig: AWSConfigConstructor,
-      lexRuntimeClient,
-      lexRuntimeV2Client,
-      pollyClient,
+      // lexRuntimeClient,
+      // pollyClient,
     });
     this.app = app;
   }
-}
 
+  async getCredentials(context) {
+    console.log('context', context.cognito.poolId);
+    const credentialProvider = fromCognitoIdentityPool({
+      identityPoolId: context.cognito.poolId,
+      clientConfig: { region: context.region || context.cognito.poolId.split(':')[0] || 'us-east-1'},
+    })
+    const credentials = await credentialProvider()
+    return credentials
+  }
+
+  // (function () {
+  //   // …
+  // })();
+  
+
+  // (async () => {
+  //   const stream = await getFileStream("https://domain.name/path/file.ext");
+  //   for await (const chunk of stream) {
+  //     console.log({ chunk });
+  //   }
+  // })();
+
+}
