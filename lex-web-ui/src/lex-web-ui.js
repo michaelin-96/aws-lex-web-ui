@@ -184,10 +184,12 @@ export class Loader {
     );
     
     console.log('region', mergedConfig.region || mergedConfig.cognito.poolId.split(':')[0] || 'us-east-1' )
-    const credentialsv3 = this.getCredentials(mergedConfig);
+    const credentialsv3 = this.getCredentials(mergedConfig)
+      .then((res) => {console.log('credentialsv3', res)})
+      .catch((err) => {console.log(err)})
 
     console.log('credentials v2', credentials);
-    console.log('credentials v3', credentialsv3);
+    // console.log('credentials v3', credentialsv3);
     // // console.log('credsv3', credsv3)
 
     
@@ -219,7 +221,7 @@ export class Loader {
       identityPoolId: context.cognito.poolId,
       clientConfig: { region: context.region || context.cognito.poolId.split(':')[0] || 'us-east-1'},
     })
-    const credentials = await credentialProvider()
+    const credentials = credentialProvider()
     return credentials
   }
 

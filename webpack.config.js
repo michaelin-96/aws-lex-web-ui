@@ -26,7 +26,7 @@ module.exports = (env) => {
       library: 'ChatBotUiLoader',
       libraryExport: 'ChatBotUiLoader',
       libraryTarget: 'umd',
-      publicPath: 'auto',
+      publicPath: '/js/',
     },
     resolve: {
       modules: [path.resolve(__dirname, './lex-web-ui/'), 'node_modules'] ,
