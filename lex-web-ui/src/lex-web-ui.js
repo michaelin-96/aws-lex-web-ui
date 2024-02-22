@@ -26,19 +26,19 @@ import LexRuntime from 'aws-sdk/clients/lexruntime';
 import LexRuntimeV2 from 'aws-sdk/clients/lexruntimev2';
 import Polly from 'aws-sdk/clients/polly';
 
-import LexWeb from '@/components/LexWeb';
-import VuexStore from '@/store';
+import LexWeb from './components/LexWeb';
+import VuexStore from './store';
 
 import { config as defaultConfig, mergeConfig } from '@/config';
-import { createApp, defineAsyncComponent } from 'vue/dist/vue.esm-bundler.js';
+import { createApp, defineAsyncComponent } from 'vue';
 import { aliases, md } from 'vuetify/iconsets/md';
 import { createStore } from 'vuex';
 
 // Vuetify
 import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import * as Vuetify from 'vuetify'
+// import * as components from 'vuetify/components'
+// import * as directives from 'vuetify/directives'
 import colors from 'vuetify/lib/util/colors'
 
 const defineAsyncComponentInstance = (window.Vue) ? window.Vue.defineAsyncComponent : defineAsyncComponent;
@@ -110,9 +110,20 @@ export const Store = VuexStore;
 export class Loader {
   constructor(config = {}) {
     const createAppInstance = (window.Vue) ? window.Vue.createApp : createApp;
-    const vuexCreateStore = (window.Vuex) ? window.Vuex.createStore : createStore;    
-    
-    const vuetify = createVuetify({
+    if (!createAppInstance) {
+      throw new Error('unable to find vue');
+    }
+    const vuexCreateStore = (window.Vuex) ? window.Vuex.createStore : createStore;
+    if (!vuexCreateStore) {
+      throw new Error('unable to find vuex');
+    }
+    const vuetifyInstance = (window.Vuetify) ? window.Vuetify : Vuetify;
+    if (!vuetifyInstance) {
+      throw new Error('unable to find vuetify');
+    }
+    const { components, directives } = vuetifyInstance;
+
+    const vuetify = vuetifyInstance.createVuetify({
       components,
       directives,
       icons: {
