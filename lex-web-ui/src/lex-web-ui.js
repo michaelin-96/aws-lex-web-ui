@@ -217,8 +217,8 @@ export class Loader {
   }
 }
 
-if(process.env.NODE_ENV === "development")
-{
-  const lexWeb = new Loader();
-  lexWeb.app.mount('#lex-app');
-}
+// if(process.env.NODE_ENV === "development")
+// {
+//   const lexWeb = new Loader();
+//   lexWeb.app.mount('#lex-app');
+// }
